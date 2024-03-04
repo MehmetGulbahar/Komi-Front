@@ -1,0 +1,25 @@
+/* Interior.css */
+
+.custom-button {
+    
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    box-shadow: 0px 0px 22px -7px rgba(0,0,0,0.96);
+    
+}
+.custom-button:hover{
+    box-shadow: none;
+    transition: 0.4s ;
+}
+.custom-button.available {
+    background-color: #4a90e2;
+}
+
+.custom-button.unavailable {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
