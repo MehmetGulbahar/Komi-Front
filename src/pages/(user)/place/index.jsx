@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "./_components/Table";
 import { useSelector } from "react-redux";
@@ -6,11 +6,74 @@ import { useSelector } from "react-redux";
 const Place = () => {
   const [activeTab, setActiveTab] = useState("interior");
   const [selectedTable, setSelectedTable] = useState(null);
+  const [isAvailable] = useState();
   const [showReservationModal, setShowReservationModal] = useState(false);
   const user = useSelector((state) => state.user.value);
-
- 
   const navigate = useNavigate();
+  const [guestNumber, setGuestNumber] = useState(1);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
+
+  const handleGuestNumberChange = (event) => setGuestNumber(event.target.value);
+  const handleStartDateChange = (date) => setSelectedStartDate(date);
+  const handleEndDateChange = (date) => setSelectedEndDate(date);
+
+  const reservationData = {
+    table: selectedTable || "DefaultTableKey",
+    start: selectedStartDate,
+    end: selectedEndDate,
+    guestNumber: guestNumber,
+  };
+
+
+  const makeReservation = async (reservationData) => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/reservation/makeReservation",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reservationData),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+      } else {
+        const errorText = await response.text();
+        console.error("Reservation failed", errorText);
+        console.log(response);
+      }
+    } catch (error) {
+      console.error("Error during reservation:", error);
+    }
+  };
+
+  /*
+const fetchTableStatus = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/api/tableStatus");
+    if (response.ok) {
+      const tableStatusData = await response.json();
+      setGardenTableAvailability(tableStatusData);
+    } else {
+      console.error("Failed to fetch table status");
+    }
+  } catch (error) {
+    console.error("Error during table status fetch:", error);
+  }
+};
+
+  useEffect(() => {
+    fetchTableStatus();
+  }, []);
+*/
+  const handleSomeEvent = () => {
+    fetchTableStatus();
+  };
 
   const NavLinkStyles = ({ isActive }) => {
     return {
@@ -62,28 +125,33 @@ const Place = () => {
   };
 
   const handleTableClick = (tableKey) => {
-    setSelectedTable(tableKey);
-    setShowReservationModal(true);
+    if (tableKey) {
+      setSelectedTable(tableKey);
+      setShowReservationModal(true);
+    }
   };
 
-  const handleReservationConfirm = (confirm) => {
+  const handleReservationConfirm = async (confirm) => {
     setShowReservationModal(false);
 
     if (confirm) {
       if (user?.firstname) {
         console.log(
-          `Reservation confirmed for ${user.firstname} at table ${selectedTable}`
+          `Reservation confirmed for ${user.firstname} ${user.lastname} at table ${selectedTable}`
         );
         if (activeTab === "interior") {
           const updatedTableAvailability = [...TableAvailability];
-          const tableIndex = parseInt(selectedTable.split('-')[1]) - 1;
+          const tableIndex = parseInt(selectedTable.split("-")[1]) - 1;
           updatedTableAvailability[tableIndex] = false;
         } else if (activeTab === "garden") {
           const updatedGardenTableAvailability = { ...gardenTableAvailability };
           updatedGardenTableAvailability[selectedTable] = false;
           setGardenTableAvailability(updatedGardenTableAvailability);
         }
-      }  else {
+        await makeReservation({
+          table: selectedTable,
+        });
+      } else {
         navigate("/login");
       }
     }
@@ -144,17 +212,20 @@ const Place = () => {
             ))}
           </>
         )}
+
         {activeTab === "garden" && (
           <>
-            {TableAvailability.map((table, index) => (
-              <Table
-                key={`Garden-${index + 1}`}
-                text={`Garden-${index + 1}`}
-                isAvailable={table}
-                onClick={() => handleTableClick(`Garden-${index + 1}`)}
-                backgroundImage="/src/assets/img/gardenImage.jpg"
-              />
-            ))}
+            {Object.entries(gardenTableAvailability).map(
+              ([tableKey, isAvailable], index) => (
+                <Table
+                  key={`Garden-${index + 1}`}
+                  text={`Garden-${index + 1}`}
+                  isAvailable={isAvailable}
+                  onClick={() => handleTableClick(`Garden-${index + 1}`)}
+                  backgroundImage="/src/assets/img/gardenImage.jpg"
+                />
+              )
+            )}
           </>
         )}
       </div>
