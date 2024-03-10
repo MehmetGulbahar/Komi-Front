@@ -9,12 +9,19 @@ export default function Card({
   description,
   cost,
   addItemToCheckItems,
+  addOrderWithNotes,
 }) {
   const modalId = `my_modal_${title.replace(/\s/g, "_")}`;
+
+  const [note, setNote] = useState("");
+  const handleChange = (event) => {
+    setNote(event.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     addItemToCheckItems(title, description, cost);
+    addOrderWithNotes(note);
     document.getElementById(modalId).close();
   };
 
@@ -48,12 +55,15 @@ export default function Card({
               <div className="modal-box">
                 <h3 className="font-bold text-lg">Order Notes</h3>
 
-                <textarea
+                <input
+                  type="text"
                   id="orderNote"
+                  value={note}
+                  onChange={handleChange}
                   name="orderNote"
-                  className="textarea textarea-bordered w-full"
+                  className="input input-bordered w-full"
                   placeholder="If you do not have an order note, you can leave this field blank."
-                ></textarea>
+                />
                 <div className="modal-action">
                   <form onSubmit={handleSubmit}>
                     <button type="submit" className="btn btn-primary mr-2">

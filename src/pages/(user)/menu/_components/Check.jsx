@@ -6,15 +6,19 @@ import Receipt from "./Receipt";
 
 export default function Check({
   checkItems,
+  ordersWithNotes,
   setCheckItems,
+  setOrdersWithNotes,
   addItemToCheckItems,
-  deleteItem,
 }) {
   const deleteOperation = (itemId) => {
     const updatedItems = checkItems.filter((item) => item.id !== itemId);
     setCheckItems(updatedItems);
   };
-
+  const deleteItem = (itemId) => {
+    const updatedItems = ordersWithNotes.filter((item) => item.id !== itemId);
+    setOrdersWithNotes(updatedItems);
+  };
   return (
     <div className=" flex flex-wrap w-full md:w-1/4 justify-center gap-5 ">
       <div className="card  shadow-xl w-full hover:none bg-slate-100">
@@ -38,16 +42,24 @@ export default function Check({
         </div>
 
         <ul role="list" className="divide-y divide-slate-200 m-4 ">
-          {checkItems.map((item, index) => (
-            <Ckitems
-              key={index}
-              id={item.id}
-              name={item.name}
-              detail={item.detail}
-              cost={item.cost}
-              deleteOperation={deleteOperation}
-            />
-          ))}
+          {checkItems.map((item, index) => {
+            const orderNote = ordersWithNotes[index]
+              ? ordersWithNotes[index].note
+              : null;
+
+            return (
+              <Ckitems
+                key={index}
+                id={item.id}
+                name={item.name}
+                detail={item.detail}
+                cost={item.cost}
+                deleteOperation={deleteOperation}
+                deleteItem={deleteItem}
+                note={orderNote}
+              />
+            );
+          })}
 
           {checkItems.length > 0 ? (
             <p className="text-right">

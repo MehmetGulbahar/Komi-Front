@@ -11,7 +11,6 @@ const AuthCheck = () => {
       method: "GET",
       credentials: "include",
       headers: {
-        Authorization: `Bearer`,
       },
     })
       .then((response) => {

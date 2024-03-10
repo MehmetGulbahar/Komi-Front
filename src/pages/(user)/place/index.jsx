@@ -25,15 +25,18 @@ const Place = () => {
     guestNumber: guestNumber,
   };
 
-
   const makeReservation = async (reservationData) => {
+    const token = localStorage.getItem("token");
+
     try {
       const response = await fetch(
         "http://localhost:8080/api/v1/reservation/makeReservation",
         {
-          method: "PATCH",
+          method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(reservationData),
         }
@@ -46,6 +49,8 @@ const Place = () => {
         const errorText = await response.text();
         console.error("Reservation failed", errorText);
         console.log(response);
+
+        console.log(result.token);
       }
     } catch (error) {
       console.error("Error during reservation:", error);
