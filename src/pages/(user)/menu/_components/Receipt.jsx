@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Receipt() {
+export default function Receipt({ checkItems, ordersWithNotes }) {
   return (
     <div className="w-full">
       <div className="collapse collapse-plus bg-slate-100">
@@ -34,26 +34,18 @@ export default function Receipt() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>The Sliding Mr. Bones </td>
-                <td>1</td>
-                <td>341</td>
-              </tr>
-              <tr>
-                <td>Witchy Woman</td>
-                <td>2</td>
-                <td>1972</td>
-              </tr>
-              <tr>
-                <td>Shining Star</td>
-                <td>1</td>
-                <td>100</td>
-              </tr>
+              {checkItems.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.name}</td>
+                  <td>1</td>
+                  <td>{item.cost}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
           <h1 className="w-full text-right font-medium text-xl">
-            Total: 1234 ₺
+            Total: {checkItems.reduce((total, item) => total + item.cost, 0)} ₺
           </h1>
         </div>
       </div>

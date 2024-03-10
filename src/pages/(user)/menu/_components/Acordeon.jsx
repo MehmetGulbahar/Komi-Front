@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import Check from "./Check";
+import Receipt from "./Receipt";
 
 const products = [
   {
@@ -27,8 +29,8 @@ const products = [
 
 export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
   const [foods, setFoods] = useState([]);
-  const imgUrl =
-    "https://firebasestorage.googleapis.com/v0/b/komiautomation.appspot.com/o/salad.jpg?alt=media&token=262b80b4-3f25-49a7-b246-2f5d050ee211";
+  const [checkItems, setCheckItems] = useState([]);
+  const [ordersWithNotes, setOrdersWithNotes] = useState([]);
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/food/all")
       .then((response) => response.json())
@@ -42,17 +44,28 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
         <input type="checkbox" name="my-accordion-3" />
         <div className="collapse-title text-xl font-medium">Starters</div>
         <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
-          {foods.map((foods, index) => (
+          {foods.map((food, index) => (
             <Card
               key={index}
-              imageUrl={foods.imageLink.link}
-              title={foods.name}
-              description={foods.description}
-              cost={foods.price}
-              addItemToCheckItems={() =>
-                addItemToCheckItems(foods.name, foods.description, foods.price)
-              }
-              addOrderWithNotes={addOrderWithNotes}
+              imageUrl={food.imageLink.link}
+              title={food.name}
+              description={food.description}
+              cost={food.price}
+              addItemToCheckItems={() => {
+                addItemToCheckItems(food.name, food.description, food.price);
+                setCheckItems((prevItems) => [
+                  ...prevItems,
+                  {
+                    name: food.name,
+                    detail: food.description,
+                    cost: food.price,
+                  },
+                ]);
+              }}
+              addOrderWithNotes={(note) => {
+                addOrderWithNotes(note);
+                setOrdersWithNotes((prevNotes) => [...prevNotes, { note }]);
+              }}
             />
           ))}
         </div>
@@ -62,20 +75,28 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
         <div className="collapse-title text-xl font-medium">Main Courses</div>
 
         <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
-          {products.map((product, index) => (
+          {foods.map((food, index) => (
             <Card
               key={index}
-              imageUrl={product.imageUrl}
-              title={product.title}
-              cost={product.cost}
-              description={product.description}
-              addItemToCheckItems={() =>
-                addItemToCheckItems(
-                  product.title,
-                  product.description,
-                  product.cost
-                )
-              }
+              imageUrl={food.imageLink.link}
+              title={food.name}
+              description={food.description}
+              cost={food.price}
+              addItemToCheckItems={() => {
+                addItemToCheckItems(food.name, food.description, food.price);
+                setCheckItems((prevItems) => [
+                  ...prevItems,
+                  {
+                    name: food.name,
+                    detail: food.description,
+                    cost: food.price,
+                  },
+                ]);
+              }}
+              addOrderWithNotes={(note) => {
+                addOrderWithNotes(note);
+                setOrdersWithNotes((prevNotes) => [...prevNotes, { note }]);
+              }}
             />
           ))}
         </div>
@@ -85,20 +106,28 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
         <div className="collapse-title text-xl font-medium">Dessert</div>
 
         <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
-          {products.map((product, index) => (
+          {foods.map((food, index) => (
             <Card
               key={index}
-              imageUrl={product.imageUrl}
-              title={product.title}
-              cost={product.cost}
-              description={product.description}
-              addItemToCheckItems={() =>
-                addItemToCheckItems(
-                  product.title,
-                  product.description,
-                  product.cost
-                )
-              }
+              imageUrl={food.imageLink.link}
+              title={food.name}
+              description={food.description}
+              cost={food.price}
+              addItemToCheckItems={() => {
+                addItemToCheckItems(food.name, food.description, food.price);
+                setCheckItems((prevItems) => [
+                  ...prevItems,
+                  {
+                    name: food.name,
+                    detail: food.description,
+                    cost: food.price,
+                  },
+                ]);
+              }}
+              addOrderWithNotes={(note) => {
+                addOrderWithNotes(note);
+                setOrdersWithNotes((prevNotes) => [...prevNotes, { note }]);
+              }}
             />
           ))}
         </div>

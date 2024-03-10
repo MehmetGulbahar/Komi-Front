@@ -19,6 +19,8 @@ export default function Check({
     const updatedItems = ordersWithNotes.filter((item) => item.id !== itemId);
     setOrdersWithNotes(updatedItems);
   };
+  
+
   return (
     <div className=" flex flex-wrap w-full md:w-1/4 justify-center gap-5 ">
       <div className="card  shadow-xl w-full hover:none bg-slate-100">
@@ -70,8 +72,7 @@ export default function Check({
         </ul>
         <button className="btn btn-sm btn-primary m-4">Make Order</button>
       </div>
-
-      <Receipt />
+      <Receipt checkItems={checkItems} ordersWithNotes={ordersWithNotes} />
     </div>
   );
 }

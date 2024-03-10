@@ -14,8 +14,13 @@ export default function Card({
   const modalId = `my_modal_${title.replace(/\s/g, "_")}`;
 
   const [note, setNote] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
   const handleChange = (event) => {
     setNote(event.target.value);
+  };
+  const handleQuantityChange = (selectedQuantity) => {
+    setQuantity(selectedQuantity);
   };
 
   const handleSubmit = (event) => {
