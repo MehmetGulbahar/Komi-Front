@@ -11,12 +11,13 @@ export default function Index() {
     return uuidv4();
   };
   const commonId = generateId();
-  const addItemToCheckItems = (name, detail, cost) => {
+  const addItemToCheckItems = (name, detail, cost, quantity) => {
     const newItem = {
       id: commonId,
       name: name,
       detail: detail,
       cost: cost,
+      quantity: 1
     };
     setCheckItems([...checkItems, newItem]);
   };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Quantity from "./Quantity";
 
 export default function Ckitems({
@@ -9,9 +9,22 @@ export default function Ckitems({
   deleteOperation,
   deleteItem,
   note,
+  quantity,
+  checkItems,
+  setCheckItems // assuming you have a setter function for checkItems
 }) {
+  
+  const [itemQuantity, setItemQuantity] = useState(quantity);
+
+  const handleQuantityChange = (selectedQuantity) => {
+    setItemQuantity(selectedQuantity);
+    const updatedItems = [...checkItems];
+    const itemIndex = updatedItems.findIndex(item => item.id === id);
+    updatedItems[itemIndex].quantity = selectedQuantity;
+    setCheckItems(updatedItems);
+  };
+
   const handleRemove = () => {
-    console.log(id);
     deleteOperation(id);
     deleteItem(id);
   };
@@ -33,7 +46,7 @@ export default function Ckitems({
       </div>
       <div className="block shrink-0 sm:flex sm:flex-col sm:items-end">
         <p className="text-sm leading-6 text-gray-900">
-          <Quantity />
+          <Quantity quantity={itemQuantity} onChangeQuantity={handleQuantityChange}  />
         </p>
         <p className="mt-1 text-xs leading-5 text-gray-500">
           {cost} ₺ / &nbsp;

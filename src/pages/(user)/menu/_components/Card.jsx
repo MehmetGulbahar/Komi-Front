@@ -28,6 +28,7 @@ export default function Card({
     addItemToCheckItems(title, description, cost);
     addOrderWithNotes(note);
     document.getElementById(modalId).close();
+    console.log(addItemToCheckItems);
   };
 
   return (

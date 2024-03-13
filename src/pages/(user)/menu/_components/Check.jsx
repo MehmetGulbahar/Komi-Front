@@ -44,33 +44,46 @@ export default function Check({
         </div>
 
         <ul role="list" className="divide-y divide-slate-200 m-4 ">
-          {checkItems.map((item, index) => {
-            const orderNote = ordersWithNotes[index]
-              ? ordersWithNotes[index].note
-              : null;
+        {checkItems.map((item, index) => {
+    const orderNote = ordersWithNotes[index]
+        ? ordersWithNotes[index].note
+        : null;
 
-            return (
-              <Ckitems
-                key={index}
-                id={item.id}
-                name={item.name}
-                detail={item.detail}
-                cost={item.cost}
-                deleteOperation={deleteOperation}
-                deleteItem={deleteItem}
-                note={orderNote}
-              />
-            );
-          })}
+    return (
+        <Ckitems
+            key={index}
+            id={item.id}
+            name={item.name}
+            detail={item.detail}
+            cost={item.cost * item.quantity}
+            deleteOperation={deleteOperation}
+            deleteItem={deleteItem}
+            note={orderNote}
+            quantity={item.quantity}
+            checkItems={checkItems}
+            setCheckItems={setCheckItems}
+        />
+    );
+})}
 
           {checkItems.length > 0 ? (
             <p className="text-right">
-              Total: {checkItems.reduce((total, item) => total + item.cost, 0)}{" "}
+              Total: {checkItems.reduce((total, item) => total + item.cost * item.quantity, 0)}{" "}
               ₺
             </p>
           ) : null}
         </ul>
-        <button className="btn btn-sm btn-primary m-4">Make Order</button>
+        <button
+    className="btn btn-sm btn-primary m-4"
+    onClick={() => {
+        checkItems.forEach((item, index) => {
+            const orderNote = ordersWithNotes[index] ? ordersWithNotes[index].note : null;
+            console.log(`Item: ${item.name}, Quantity: ${item.quantity}, Cost: ${item.cost}, Note: ${orderNote}`);
+        });
+    }}
+>
+    Make Order
+</button>
       </div>
       <Receipt checkItems={checkItems} ordersWithNotes={ordersWithNotes} />
     </div>
