@@ -38,13 +38,16 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
       .catch((error) => console.error("Error fetching foods:", error));
   }, []);
 
+  const filterFoodsByCourse = (course) => {
+    return foods.filter((food) => food.course === course);
+  };
   return (
     <div className="flex  w-full md:w-2/3 flex-wrap justify-center gap-3 m-2">
       <div className="collapse collapse-plus bg-slate-100">
         <input type="checkbox" name="my-accordion-3" />
         <div className="collapse-title text-xl font-medium">Starters</div>
         <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
-          {foods.map((food, index) => (
+          {filterFoodsByCourse("APPETIZER").map((food, index) => (
             <Card
               key={index}
               imageUrl={food.imageLink.link}
@@ -75,7 +78,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
         <div className="collapse-title text-xl font-medium">Main Courses</div>
 
         <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
-          {foods.map((food, index) => (
+          {filterFoodsByCourse("MAIN").map((food, index) => (
             <Card
               key={index}
               imageUrl={food.imageLink.link}
@@ -106,7 +109,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
         <div className="collapse-title text-xl font-medium">Dessert</div>
 
         <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
-          {foods.map((food, index) => (
+          {filterFoodsByCourse("DESSERT").map((food, index) => (
             <Card
               key={index}
               imageUrl={food.imageLink.link}
