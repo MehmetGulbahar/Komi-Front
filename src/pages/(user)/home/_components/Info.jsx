@@ -1,26 +1,56 @@
-import React from 'react';
-import './Info.css';
-import kitchen from "@/assets/img/kitchen.jpg";
+import React from "react";
+import "./Info.css";
+import kitchen from "@/assets/img/cooker.jpg";
 
-const Info = () => {
-    return (
-    <div className="hero min-h-screen bg-gradient-to-r from-white to-gray-200 flex flex-wrap justify-center ">
-           
-           <div className='w-full  '>
-           <h1 className="text-5xl font-light font-sans text-left text-gray-700 ">
-                Innovation on the Plate: Unveiling Our Journey
-            </h1>
-           </div>
-        
-            <div className='flex items-center font-mono z-10 w-full lg:w-1/2 md:w-full text-left  '>
-                <p className='indent-8  text-left m-3 text-lg'>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" <a href='#' className='underline font-bold decoration-sky-500'>by Cicero</a> are also reproduced in their exact original form, accompanied by English versions from the 1914 translation <a href='#' className='underline font-bold decoration-sky-500'>by H. Rackam.</a></p>
-            </div>
-            <div className=' w-full lg:w-1/2 md:w-full text-center  '>
-                <img className='  z-0' src={kitchen} alt="" />
-            </div>
+export default function Info() {
+  const fontStyle = {
+    backgroundImage: `url('${kitchen}')`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundAttachment: "fixed",
+    fontFamily: "Pacifico, cursive",
+    opacity: 0.9,
+  };
+  const pasifico = {
+    fontFamily: "Pacifico, cursive",
+  };
+
+  return (
+    <div>
+      <div className="mt-5 md:mt-20">
+        <h1
+          className="text-4xl lg:text-5xl xl:text-6xl text-center underline decoration-amber-400 mb-4"
+          style={pasifico}
+        >
+          Innovation on the Plate: Unveiling Our Journey
+        </h1>
+        <div className="h-20"></div>
+      </div>
+
+      <div
+        style={fontStyle}
+        className="flex h-screen items-center justify-center text-center"
+      >
+        <h2 className="text-4xl font-bold text-white">
+          <p
+            className="text-lg lg:text-xl xl:text-2xl ps-5 pe-5"
+            style={pasifico}
+          >
+            The standard chunk of Lorem Ipsum used since the 1500s is reproduced
+            below for those interested. Sections 1.10.32 and 1.10.33 from "de
+            Finibus Bonorum et Malorum"{" "}
+            <a href="#" className="underline font-bold decoration-sky-500">
+              by Cicero
+            </a>{" "}
+            are also reproduced in their exact original form, accompanied by
+            English versions from the 1914 translation{" "}
+            <a href="#" className="underline font-bold decoration-sky-500">
+              by H. Rackam.
+            </a>
+          </p>
+        </h2>
+      </div>
+      <div className="h-20"></div>
     </div>
-          
-        
-      );
-    };
-export default Info;
+  );
+}

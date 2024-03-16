@@ -5,6 +5,7 @@ import { logout } from "@/store/userSlice";
 export default function Navbar() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
+
   const handleLogout = () => {
     fetch("http://localhost:8080/api/v1/auth/logout", {
       method: "GET",
@@ -80,16 +81,17 @@ export default function Navbar() {
               {" "}
               <li className="mr-4">RESERVATION</li>
             </NavLink>
-            <NavLink
-              to="/place"
-              className={({ isActive }) =>
-                `${
-                  isActive ? "underline" : ""
-                } text-black hover:text-black focus:outline-none`
-              }
-            >
-              <li className="mr-4">PLACE</li>
-            </NavLink>
+              <NavLink
+                to="/place"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "underline" : ""
+                  } text-black hover:text-black focus:outline-none`
+                }
+              >
+                <li className="mr-4">PLACE</li>
+              </NavLink>
+           
           </ul>
         </div>
         <NavLink to="/">
@@ -104,6 +106,7 @@ export default function Navbar() {
           </button>
         </NavLink>
       </div>
+
       <div className="flex justify-center navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <NavLink
@@ -137,18 +140,19 @@ export default function Navbar() {
             {" "}
             <li className="mr-4">RESERVATION</li>
           </NavLink>
-          <NavLink
-            to="/place"
-            className={({ isActive }) =>
-              `${
-                isActive ? "underline" : ""
-              } text-black hover:text-black focus:outline-none`
-            }
-          >
-            <li className="mr-4">PLACE</li>
-          </NavLink>
+            <NavLink
+              to="/place"
+              className={({ isActive }) =>
+                `${
+                  isActive ? "underline" : ""
+                } text-black hover:text-black focus:outline-none`
+              }
+            >
+              <li className="mr-4">PLACE</li>
+            </NavLink>
         </ul>
       </div>
+
       <div className="navbar-end">
         {user?.firstname ? (
           <div className="dropdown dropdown-end">

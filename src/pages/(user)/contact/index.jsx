@@ -1,7 +1,3 @@
-function index() {
-  return (
-    <div>contact page</div>
-  )
-}
+function index() {}
 
-export default index
+export default index;

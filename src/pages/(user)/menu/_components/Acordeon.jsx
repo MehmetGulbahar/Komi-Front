@@ -43,6 +43,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
   };
   return (
     <div className="flex  w-full md:w-2/3 flex-wrap justify-center gap-3 m-2">
+      {/* Starter Cards */}
       <div className="collapse collapse-plus bg-slate-100">
         <input type="checkbox" name="my-accordion-3" />
         <div className="collapse-title text-xl font-medium">Starters</div>
@@ -52,6 +53,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               key={index}
               imageUrl={food.imageLink.link}
               title={food.name}
+              preparationTime={food.preparationTime}
               description={food.description}
               cost={food.price}
               addItemToCheckItems={() => {
@@ -73,6 +75,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           ))}
         </div>
       </div>
+      {/* Main Course Cards */}
       <div className="collapse collapse-plus bg-slate-100">
         <input type="checkbox" name="my-accordion-3" />
         <div className="collapse-title text-xl font-medium">Main Courses</div>
@@ -104,6 +107,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           ))}
         </div>
       </div>
+      {/* Dessert Cards */}
       <div className="collapse collapse-plus bg-slate-100">
         <input type="checkbox" name="my-accordion-3" />
         <div className="collapse-title text-xl font-medium">Dessert</div>
@@ -138,3 +142,4 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
     </div>
   );
 }
+

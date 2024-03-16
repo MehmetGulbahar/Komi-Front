@@ -2,18 +2,16 @@
 module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+    "./src/**/*.{js,ts,jsx,tsx}",  ],
   theme: {
     extend: {},
   },
   daisyui: {
-    themes: ["emerald"]
+    themes: ["light"]
   },
   plugins: [
     require('daisyui'),
     //require('@tailwindcss/forms'),
-    // other plugins
   ],
 };
 
