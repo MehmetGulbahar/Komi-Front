@@ -35,7 +35,7 @@ export default function Hero() {
             >
               <span className="sm:text-5xl"></span> Experience Excellence in{" "}
               <br />
-              Dining with
+              Dining with{""}
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -43,7 +43,7 @@ export default function Hero() {
                 className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-600"
                 whileHover={{ scale: 1.1 }}
               >
-                KOMI
+                <span> KOMI</span>
               </motion.span>
               <br />
               Where Flavor Meets Innovation!

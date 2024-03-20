@@ -1,3 +1,4 @@
+import Features from "./_components/Features";
 import Hero from "./_components/Hero";
 import Info from "./_components/Info";
 import Services from "./_components/Map";
@@ -8,7 +9,8 @@ export default function index() {
     <div>
       <Hero />
       <Info />
-      <Services/>
+      <Features />
+      <Services />
     </div>
   );
 }

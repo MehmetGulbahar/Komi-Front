@@ -50,7 +50,6 @@ export default function Info() {
           </p>
         </h2>
       </div>
-      <div className="h-20"></div>
     </div>
   );
 }
