@@ -59,6 +59,7 @@ export default function Check({
             deleteOperation={deleteOperation}
             deleteItem={deleteItem}
             note={orderNote}
+            imageUrl={item.imageUrl}
             quantity={item.quantity}
             checkItems={checkItems}
             setCheckItems={setCheckItems}

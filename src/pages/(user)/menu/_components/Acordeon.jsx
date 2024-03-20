@@ -37,17 +37,33 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
       .then((data) => setFoods(data))
       .catch((error) => console.error("Error fetching foods:", error));
   }, []);
+  const [activeTab, setActiveTab] = useState(1);
 
+  const handleTabClick = (tabIndex) => {
+    setActiveTab(tabIndex === activeTab ? null : tabIndex);
+  };
   const filterFoodsByCourse = (course) => {
     return foods.filter((food) => food.course === course);
   };
   return (
-    <div className="flex  w-full md:w-2/3 flex-wrap justify-center gap-3 m-2">
+    <div className=" flex w-full flex-wrap  gap-3 m-2">
       {/* Starter Cards */}
-      <div className="collapse collapse-plus bg-slate-100">
-        <input type="checkbox" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">Starters</div>
-        <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
+      <div role="tablist" className="tabs tabs-lifted  w-full text-wrap">
+        <input
+          type="radio"
+          name="my_tabs_2"
+          role="tab"
+          className={`tab ${activeTab === 1 ? 'tab-active' : ''}`}
+          onClick={() => handleTabClick(1)}
+          style={{ width: "8rem"}}
+          aria-label="Starters"
+          
+        />
+        <div
+          role="tabpanel"
+          className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+        >
+          
           {filterFoodsByCourse("APPETIZER").map((food, index) => (
             <Card
               key={index}
@@ -57,13 +73,14 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               description={food.description}
               cost={food.price}
               addItemToCheckItems={() => {
-                addItemToCheckItems(food.name, food.description, food.price);
+                addItemToCheckItems(food.name, food.description, food.price, food.imageLink.link);
                 setCheckItems((prevItems) => [
                   ...prevItems,
                   {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
+                    imageUrl: food.imageLink.link
                   },
                 ]);
               }}
@@ -74,13 +91,22 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
             />
           ))}
         </div>
-      </div>
-      {/* Main Course Cards */}
-      <div className="collapse collapse-plus bg-slate-100">
-        <input type="checkbox" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">Main Courses</div>
 
-        <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
+        <input
+          type="radio"
+          name="my_tabs_2"
+          role="tab"
+          className={`tab ${activeTab === 2 ? 'tab-active' : ''}`}
+          onClick={() => handleTabClick(2)}
+          style={{ width: "8rem"}}
+          aria-label="Main Courses"
+          
+        />
+        <div
+          role="tabpanel"
+          className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+        >
+          
           {filterFoodsByCourse("MAIN").map((food, index) => (
             <Card
               key={index}
@@ -89,13 +115,14 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               description={food.description}
               cost={food.price}
               addItemToCheckItems={() => {
-                addItemToCheckItems(food.name, food.description, food.price);
+                addItemToCheckItems(food.name, food.description, food.price, food.imageLink.link);
                 setCheckItems((prevItems) => [
                   ...prevItems,
                   {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
+                    imageUrl: food.imageLink.link
                   },
                 ]);
               }}
@@ -106,13 +133,21 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
             />
           ))}
         </div>
-      </div>
-      {/* Dessert Cards */}
-      <div className="collapse collapse-plus bg-slate-100">
-        <input type="checkbox" name="my-accordion-3" />
-        <div className="collapse-title text-xl font-medium">Dessert</div>
 
-        <div className="collapse-content flex flex-wrap justify-center gap-5 m-2">
+        <input
+          type="radio"
+          name="my_tabs_2"
+          role="tab"
+          className={`tab ${activeTab === 3 ? 'tab-active' : ''}`}
+          onClick={() => handleTabClick(3)}
+          style={{ width: "8rem"}}
+          aria-label="Desserts"
+        />
+        <div
+          role="tabpanel"
+          className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+        >
+          
           {filterFoodsByCourse("DESSERT").map((food, index) => (
             <Card
               key={index}
@@ -121,13 +156,14 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               description={food.description}
               cost={food.price}
               addItemToCheckItems={() => {
-                addItemToCheckItems(food.name, food.description, food.price);
+                addItemToCheckItems(food.name, food.description, food.price, food.imageLink.link);
                 setCheckItems((prevItems) => [
                   ...prevItems,
                   {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
+                    imageUrl: food.imageLink.link
                   },
                 ]);
               }}
@@ -142,4 +178,3 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
     </div>
   );
 }
-
