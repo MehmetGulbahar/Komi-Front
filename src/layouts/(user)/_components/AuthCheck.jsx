@@ -6,11 +6,13 @@ import { useSelector } from "react-redux";
 const AuthCheck = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
+  const token = localStorage.getItem("token");
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/auth/check-token", {
-      method: "GET",
+      method: "POST",
       credentials: "include",
       headers: {
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {

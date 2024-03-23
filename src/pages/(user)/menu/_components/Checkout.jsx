@@ -1,25 +1,64 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import Ckitems from "./Ckitems";
 
-
-export default function Checkout({ open, 
-    setOpen,
-    checkItems,
-    ordersWithNotes,
-    setCheckItems,
-    setOrdersWithNotes,
-    addItemToCheckItems,
+export default function Checkout({
+  open,
+  setOpen,
+  checkItems,
+  ordersWithNotes,
+  setCheckItems,
+  setOrdersWithNotes,
+  addItemToCheckItems,
 }) {
-    const deleteOperation = (itemId) => {
-        const updatedItems = checkItems.filter((item) => item.id !== itemId);
-        setCheckItems(updatedItems);
-      };
-      const deleteItem = (itemId) => {
-        const updatedItems = ordersWithNotes.filter((item) => item.id !== itemId);
-        setOrdersWithNotes(updatedItems);
-      };
+  const [orderRequests, setOrderRequests] = useState([]);
+  const token = localStorage.getItem("token");
+
+  const recordOrder = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/order/record",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(orderRequests),
+        }
+      );
+      if (response.ok) {
+        console.log("Order recorded successfully");
+        setCheckItems([]);
+        setOpen(false);
+      } else {
+        console.error("Failed to record order");
+      }
+    } catch (error) {
+      console.error("Error recording order:", error);
+    }
+  };
+
+  useEffect(() => {
+    const formattedRequests = checkItems.map((food) => ({
+      food: food.name,
+      count: food.quantity,
+      note: "Benim notum",
+    }));
+    console.log(formattedRequests);
+
+    setOrderRequests(formattedRequests);
+  }, [checkItems]);
+
+  const deleteOperation = (itemId) => {
+    const updatedItems = checkItems.filter((item) => item.id !== itemId);
+    setCheckItems(updatedItems);
+  };
+  const deleteItem = (itemId) => {
+    const updatedItems = ordersWithNotes.filter((item) => item.id !== itemId);
+    setOrdersWithNotes(updatedItems);
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -57,7 +96,7 @@ export default function Checkout({ open,
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900">
-                         Order
+                          Order
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
@@ -109,23 +148,22 @@ export default function Checkout({ open,
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Total</p>
                         {checkItems.length > 0 ? (
-                        <p className="text-right">
-                        {checkItems.reduce((total, item) => total + item.cost * item.quantity, 0)}{" "}
-                        ₺
-                        </p>
-                         ) : null}
+                          <p className="text-right">
+                            {checkItems.reduce(
+                              (total, item) =>
+                                total + item.cost * item.quantity,
+                              0
+                            )}{" "}
+                            ₺
+                          </p>
+                        ) : null}
                       </div>
-                      
+
                       <div className="mt-6">
                         <a
                           href="#"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                          onClick={() => {
-                            checkItems.forEach((item, index) => {
-                                const orderNote = ordersWithNotes[index] ? ordersWithNotes[index].note : null;
-                                console.log(`Item: ${item.name}, Quantity: ${item.quantity}, Cost: ${item.cost}, Note: ${orderNote}`);
-                            });
-                        }}
+                          onClick={recordOrder}
                         >
                           Checkout
                         </a>

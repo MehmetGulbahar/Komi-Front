@@ -15,6 +15,7 @@ export default function Navbar() {
         if (res.ok) {
           console.log("Logout successful");
           dispatch(logout());
+          localStorage.removeItem("token");
         } else {
           console.error(`HTTP error, status code ${res.status}`);
         }
@@ -81,17 +82,16 @@ export default function Navbar() {
               {" "}
               <li className="mr-4">RESERVATION</li>
             </NavLink>
-              <NavLink
-                to="/place"
-                className={({ isActive }) =>
-                  `${
-                    isActive ? "underline" : ""
-                  } text-black hover:text-black focus:outline-none`
-                }
-              >
-                <li className="mr-4">PLACE</li>
-              </NavLink>
-           
+            <NavLink
+              to="/place"
+              className={({ isActive }) =>
+                `${
+                  isActive ? "underline" : ""
+                } text-black hover:text-black focus:outline-none`
+              }
+            >
+              <li className="mr-4">PLACE</li>
+            </NavLink>
           </ul>
         </div>
         <NavLink to="/">
@@ -140,16 +140,16 @@ export default function Navbar() {
             {" "}
             <li className="mr-4">RESERVATION</li>
           </NavLink>
-            <NavLink
-              to="/place"
-              className={({ isActive }) =>
-                `${
-                  isActive ? "underline" : ""
-                } text-black hover:text-black focus:outline-none`
-              }
-            >
-              <li className="mr-4">PLACE</li>
-            </NavLink>
+          <NavLink
+            to="/place"
+            className={({ isActive }) =>
+              `${
+                isActive ? "underline" : ""
+              } text-black hover:text-black focus:outline-none`
+            }
+          >
+            <li className="mr-4">PLACE</li>
+          </NavLink>
         </ul>
       </div>
 

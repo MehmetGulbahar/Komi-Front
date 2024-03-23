@@ -17,6 +17,8 @@ export default function Index() {
   };
   const handleSignIn = async (e) => {
     e.preventDefault();
+    
+
 
     try {
       const response = await fetch("http://localhost:8080/api/v1/auth/login", {
@@ -30,11 +32,8 @@ export default function Index() {
 
       if (response.ok) {
         const result = await response.json();
-        const userAndToken = {
-          user: result.user,
-          token: result.token,
-        };
-
+      
+        localStorage.setItem("token", result.access_token)
         dispatch(setUser(result));
 
         console.log("Login successful", result);
