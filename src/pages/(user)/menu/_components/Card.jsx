@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Card.css";
 
 import Check from "./Check";
 
@@ -27,9 +26,8 @@ export default function Card({
     addItemToCheckItems(title, description, cost, imageUrl);
     addOrderWithNotes(note);
     document.getElementById(modalId).close();
-    console.log(addItemToCheckItems);
-    
   };
+
 
   return (
     <div className="flex items-center justify-center w-full">
@@ -73,39 +71,6 @@ export default function Card({
           </div>
         </div>
       </div>
-
-      {/*
-  <div className="card card-compact card-side bg-base-100 shadow-xl">
-        
-  <figure className="w-48 h-48 m-0">
-    
-    <img
-      className="w-full h-full object-cover"
-      src={imageUrl}
-      alt={title}
-    />
-  </figure>
-  
-  <div className="card-body h-48">
-    <h2 className="card-title">{title}</h2>
-    <p>{description}</p>
-    <p className="text-xs">
-      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-        {cost} ₺
-      </span>
-    </p>
-    <div className="card-actions justify-end">
-      <button
-        className="btn m-2 btn-primary btn-circle text-xl"
-        onClick={() => document.getElementById(modalId).showModal()}
-      >
-        <h1>+</h1>
-      </button>
-    </div>
-  </div>
-</div>
-  */}
-
       <dialog id={modalId} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Order Notes</h3>

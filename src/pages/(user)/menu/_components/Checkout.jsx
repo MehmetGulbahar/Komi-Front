@@ -15,30 +15,35 @@ export default function Checkout({
   const [orderRequests, setOrderRequests] = useState([]);
   const token = localStorage.getItem("token");
 
-  const recordOrder = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/order/record",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(orderRequests),
-        }
-      );
-      if (response.ok) {
-        console.log("Order recorded successfully");
-        setCheckItems([]);
-        setOpen(false);
-      } else {
-        console.error("Failed to record order");
-      }
-    } catch (error) {
-      console.error("Error recording order:", error);
-    }
-  };
+ const recordOrder = async () => {
+   try {
+     const formattedRequests = checkItems.map((item) => ({
+       food: item.name,
+       count: item.quantity,
+       note: ordersWithNotes.find((order) => order.id === item.id)?.note || "",
+     }));
+
+     const response = await fetch("http://localhost:8080/api/v1/order/record", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+       },
+       body: JSON.stringify(formattedRequests),
+     });
+
+     if (response.ok) {
+       console.log("Order recorded successfully");
+       setCheckItems([]);
+       setOpen(false);
+     } else {
+       console.error("Failed to record order");
+     }
+   } catch (error) {
+     console.error("Error recording order:", error);
+   }
+ };
+
 
   useEffect(() => {
     const formattedRequests = checkItems.map((food) => ({
