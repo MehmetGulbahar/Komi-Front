@@ -7,11 +7,12 @@ import { useSelector } from "react-redux";
 
 function Index() {
   const user = useSelector((state) => state.user.value);
+  const token = localStorage.getItem("token");
 
-  return user ? (
+  return user || !user ? (
     <>
       <Navbar />
-      <AuthCheck />
+      {!token && <AuthCheck />}
       <Outlet />
       <Footer />
     </>
