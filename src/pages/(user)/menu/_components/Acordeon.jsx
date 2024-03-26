@@ -30,7 +30,7 @@ const products = [
 export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
   const [foods, setFoods] = useState([]);
   const [checkItems, setCheckItems] = useState([]);
-  const [ordersWithNotes, setOrdersWithNotes] = useState([]);
+
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/food/all")
       .then((response) => response.json())
@@ -53,17 +53,15 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           type="radio"
           name="my_tabs_2"
           role="tab"
-          className={`tab ${activeTab === 1 ? 'tab-active' : ''}`}
+          className={`tab ${activeTab === 1 ? "tab-active" : ""}`}
           onClick={() => handleTabClick(1)}
-          style={{ width: "8rem"}}
+          style={{ width: "8rem" }}
           aria-label="Starters"
-          
         />
         <div
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6"
         >
-          
           {filterFoodsByCourse("APPETIZER").map((food, index) => (
             <Card
               key={index}
@@ -72,21 +70,30 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               preparationTime={food.preparationTime}
               description={food.description}
               cost={food.price}
-              addItemToCheckItems={() => {
-                addItemToCheckItems(food.name, food.description, food.price, food.imageLink.link);
+              addItemToCheckItems={(
+                title,
+                description,
+                cost,
+                imageUrl,
+                note
+              ) => {
+                addItemToCheckItems(
+                  food.name,
+                  food.description,
+                  food.price,
+                  food.imageLink.link,
+                  note
+                );
                 setCheckItems((prevItems) => [
                   ...prevItems,
                   {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
-                    imageUrl: food.imageLink.link
+                    imageUrl: food.imageLink.link,
+                    note: note,
                   },
                 ]);
-              }}
-              addOrderWithNotes={(note) => {
-                addOrderWithNotes(note);
-                setOrdersWithNotes((prevNotes) => [...prevNotes, { note }]);
               }}
             />
           ))}
@@ -96,17 +103,15 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           type="radio"
           name="my_tabs_2"
           role="tab"
-          className={`tab ${activeTab === 2 ? 'tab-active' : ''}`}
+          className={`tab ${activeTab === 2 ? "tab-active" : ""}`}
           onClick={() => handleTabClick(2)}
-          style={{ width: "8rem"}}
+          style={{ width: "8rem" }}
           aria-label="Main Courses"
-          
         />
         <div
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6"
         >
-          
           {filterFoodsByCourse("MAIN").map((food, index) => (
             <Card
               key={index}
@@ -114,21 +119,30 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               title={food.name}
               description={food.description}
               cost={food.price}
-              addItemToCheckItems={() => {
-                addItemToCheckItems(food.name, food.description, food.price, food.imageLink.link);
+              addItemToCheckItems={(
+                title,
+                description,
+                cost,
+                imageUrl,
+                note
+              ) => {
+                addItemToCheckItems(
+                  food.name,
+                  food.description,
+                  food.price,
+                  food.imageLink.link,
+                  note
+                );
                 setCheckItems((prevItems) => [
                   ...prevItems,
                   {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
-                    imageUrl: food.imageLink.link
+                    imageUrl: food.imageLink.link,
+                    note: note,
                   },
                 ]);
-              }}
-              addOrderWithNotes={(note) => {
-                addOrderWithNotes(note);
-                setOrdersWithNotes((prevNotes) => [...prevNotes, { note }]);
               }}
             />
           ))}
@@ -138,16 +152,15 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           type="radio"
           name="my_tabs_2"
           role="tab"
-          className={`tab ${activeTab === 3 ? 'tab-active' : ''}`}
+          className={`tab ${activeTab === 3 ? "tab-active" : ""}`}
           onClick={() => handleTabClick(3)}
-          style={{ width: "8rem"}}
+          style={{ width: "8rem" }}
           aria-label="Desserts"
         />
         <div
           role="tabpanel"
           className="tab-content bg-base-100 border-base-300 rounded-box p-6"
         >
-          
           {filterFoodsByCourse("DESSERT").map((food, index) => (
             <Card
               key={index}
@@ -155,21 +168,30 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               title={food.name}
               description={food.description}
               cost={food.price}
-              addItemToCheckItems={() => {
-                addItemToCheckItems(food.name, food.description, food.price, food.imageLink.link);
+              addItemToCheckItems={(
+                title,
+                description,
+                cost,
+                imageUrl,
+                note
+              ) => {
+                addItemToCheckItems(
+                  food.name,
+                  food.description,
+                  food.price,
+                  food.imageLink.link,
+                  note
+                );
                 setCheckItems((prevItems) => [
                   ...prevItems,
                   {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
-                    imageUrl: food.imageLink.link
+                    imageUrl: food.imageLink.link,
+                    note: note,
                   },
                 ]);
-              }}
-              addOrderWithNotes={(note) => {
-                addOrderWithNotes(note);
-                setOrdersWithNotes((prevNotes) => [...prevNotes, { note }]);
               }}
             />
           ))}

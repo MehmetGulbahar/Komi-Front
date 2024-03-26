@@ -1,4 +1,3 @@
-// Check.js
 import React, { useState } from "react";
 import Ckitems from "./Ckitems";
 
@@ -19,7 +18,6 @@ export default function Check({
     const updatedItems = ordersWithNotes.filter((item) => item.id !== itemId);
     setOrdersWithNotes(updatedItems);
   };
-  
 
   return (
     <div className=" flex flex-wrap w-full md:w-1/4 justify-center gap-5 ">
@@ -44,47 +42,55 @@ export default function Check({
         </div>
 
         <ul role="list" className="divide-y divide-slate-200 m-4 ">
-        {checkItems.map((item, index) => {
-    const orderNote = ordersWithNotes[index]
-        ? ordersWithNotes[index].note
-        : null;
+          {checkItems.map((item, index) => {
+            const orderNote = ordersWithNotes[index]
+              ? ordersWithNotes[index].note
+              : null;
 
-    return (
-        <Ckitems
-            key={index}
-            id={item.id}
-            name={item.name}
-            detail={item.detail}
-            cost={item.cost * item.quantity}
-            deleteOperation={deleteOperation}
-            deleteItem={deleteItem}
-            note={orderNote}
-            imageUrl={item.imageUrl}
-            quantity={item.quantity}
-            checkItems={checkItems}
-            setCheckItems={setCheckItems}
-        />
-    );
-})}
+            return (
+              <Ckitems
+                key={index}
+                id={item.id}
+                name={item.name}
+                detail={item.detail}
+                cost={item.cost * item.quantity}
+                deleteOperation={deleteOperation}
+                deleteItem={deleteItem}
+                note={orderNote}
+                imageUrl={item.imageUrl}
+                quantity={item.quantity}
+                checkItems={checkItems}
+                setCheckItems={setCheckItems}
+              />
+            );
+          })}
 
           {checkItems.length > 0 ? (
             <p className="text-right">
-              Total: {checkItems.reduce((total, item) => total + item.cost * item.quantity, 0)}{" "}
+              Total:{" "}
+              {checkItems.reduce(
+                (total, item) => total + item.cost * item.quantity,
+                0
+              )}{" "}
               ₺
             </p>
           ) : null}
         </ul>
         <button
-    className="btn btn-sm btn-primary m-4"
-    onClick={() => {
-        checkItems.forEach((item, index) => {
-            const orderNote = ordersWithNotes[index] ? ordersWithNotes[index].note : null;
-            console.log(`Item: ${item.name}, Quantity: ${item.quantity}, Cost: ${item.cost}, Note: ${orderNote}`);
-        });
-    }}
->
-    Make Order
-</button>
+          className="btn btn-sm btn-primary m-4"
+          onClick={() => {
+            checkItems.forEach((item, index) => {
+              const orderNote = ordersWithNotes[index]
+                ? ordersWithNotes[index].note
+                : null;
+              console.log(
+                `Item: ${item.name}, Quantity: ${item.quantity}, Cost: ${item.cost}, Note: ${orderNote}`
+              );
+            });
+          }}
+        >
+          Make Order
+        </button>
       </div>
       <Receipt checkItems={checkItems} ordersWithNotes={ordersWithNotes} />
     </div>

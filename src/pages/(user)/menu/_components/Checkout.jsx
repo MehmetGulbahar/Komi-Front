@@ -7,49 +7,49 @@ export default function Checkout({
   open,
   setOpen,
   checkItems,
-  ordersWithNotes,
   setCheckItems,
-  setOrdersWithNotes,
   addItemToCheckItems,
 }) {
   const [orderRequests, setOrderRequests] = useState([]);
   const token = localStorage.getItem("token");
 
- const recordOrder = async () => {
-   try {
-     const formattedRequests = checkItems.map((item) => ({
-       food: item.name,
-       count: item.quantity,
-       note: ordersWithNotes.find((order) => order.id === item.id)?.note || "",
-     }));
+  const recordOrder = async () => {
+    try {
+      const formattedRequests = checkItems.map((item) => ({
+        food: item.name,
+        count: item.quantity,
+        note: item.note,
+      }));
 
-     const response = await fetch("http://localhost:8080/api/v1/order/record", {
-       method: "POST",
-       headers: {
-         "Content-Type": "application/json",
-         Authorization: `Bearer ${token}`,
-       },
-       body: JSON.stringify(formattedRequests),
-     });
+      const response = await fetch(
+        "http://localhost:8080/api/v1/order/record",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formattedRequests),
+        }
+      );
 
-     if (response.ok) {
-       console.log("Order recorded successfully");
-       setCheckItems([]);
-       setOpen(false);
-     } else {
-       console.error("Failed to record order");
-     }
-   } catch (error) {
-     console.error("Error recording order:", error);
-   }
- };
-
+      if (response.ok) {
+        console.log("Order recorded successfully");
+        setCheckItems([]);
+        setOpen(false);
+      } else {
+        console.error("Failed to record order");
+      }
+    } catch (error) {
+      console.error("Error recording order:", error);
+    }
+  };
 
   useEffect(() => {
     const formattedRequests = checkItems.map((food) => ({
       food: food.name,
       count: food.quantity,
-      note: "Benim notum",
+      note: food.note,
     }));
     console.log(formattedRequests);
 
@@ -60,11 +60,6 @@ export default function Checkout({
     const updatedItems = checkItems.filter((item) => item.id !== itemId);
     setCheckItems(updatedItems);
   };
-  const deleteItem = (itemId) => {
-    const updatedItems = ordersWithNotes.filter((item) => item.id !== itemId);
-    setOrdersWithNotes(updatedItems);
-  };
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -122,28 +117,21 @@ export default function Checkout({
                             role="list"
                             className="-my-6 divide-y divide-gray-200"
                           >
-                            {checkItems &&
-                              checkItems.map((item, index) => {
-                                const orderNote = ordersWithNotes[index]
-                                  ? ordersWithNotes[index].note
-                                  : null;
-                                return (
-                                  <Ckitems
-                                    key={index}
-                                    id={item.id}
-                                    name={item.name}
-                                    detail={item.detail}
-                                    cost={item.cost * item.quantity}
-                                    deleteOperation={deleteOperation}
-                                    deleteItem={deleteItem}
-                                    note={orderNote}
-                                    imageUrl={item.imageUrl}
-                                    quantity={item.quantity}
-                                    checkItems={checkItems}
-                                    setCheckItems={setCheckItems}
-                                  />
-                                );
-                              })}
+                            {checkItems.map((item, index) => (
+                              <Ckitems
+                                key={index}
+                                id={item.id}
+                                name={item.name}
+                                detail={item.detail}
+                                cost={item.cost * item.quantity}
+                                deleteOperation={deleteOperation}
+                                note={item.note}
+                                imageUrl={item.imageUrl}
+                                quantity={item.quantity}
+                                checkItems={checkItems}
+                                setCheckItems={setCheckItems}
+                              />
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -163,7 +151,6 @@ export default function Checkout({
                           </p>
                         ) : null}
                       </div>
-
                       <div className="mt-6">
                         <a
                           href="#"

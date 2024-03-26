@@ -1,41 +1,34 @@
 import React, { useState } from "react";
-
 import Check from "./Check";
-
 export default function Card({
+  id,
   title,
   description,
   cost,
   imageUrl,
   addItemToCheckItems,
-  addOrderWithNotes,
 }) {
   const modalId = `my_modal_${title.replace(/\s/g, "_")}`;
-
   const [note, setNote] = useState("");
   const [quantity, setQuantity] = useState(1);
   const handleChange = (event) => {
     setNote(event.target.value);
+    console.log("Note:", event.target.value);
   };
   const handleQuantityChange = (selectedQuantity) => {
     setQuantity(selectedQuantity);
   };
-  
   const handleSubmit = (event) => {
     event.preventDefault();
-    addItemToCheckItems(title, description, cost, imageUrl);
-    addOrderWithNotes(note);
+    console.log("Submitting with note:", note);
+    addItemToCheckItems(title, description, cost, imageUrl, note);
     document.getElementById(modalId).close();
   };
-
-
   return (
     <div className="flex items-center justify-center w-full">
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-2 py-2 sm:px-4 sm:py-6 lg:max-w-7xl lg:px-8">
           <div className="mt-0 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
-            
-
             <div className="group relative w-full  bg-white p-2 rounded-md items-center">
               <div className="w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 ">
                 <div className="lg:h-48 lg:w-48 bg-red-400 ">

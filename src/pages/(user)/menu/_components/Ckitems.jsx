@@ -12,7 +12,7 @@ export default function Ckitems({
   imageUrl,
   quantity,
   checkItems,
-  setCheckItems,
+  setCheckItems, 
 }) {
   const [itemQuantity, setItemQuantity] = useState(quantity);
 

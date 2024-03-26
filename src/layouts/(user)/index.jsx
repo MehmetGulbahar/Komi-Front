@@ -17,7 +17,7 @@ function Index() {
     </>
   ) : (
     <>
-    <Navbar/>
+      <Navbar />
       <AuthCheck />
       bekleyiniz
     </>

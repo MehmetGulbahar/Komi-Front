@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Acordeon from "./_components/Acordeon";
 import Check from "./_components/Check";
 import { v4 as uuidv4 } from "uuid";
 import Checkout from "./_components/Checkout";
-
 export default function Index() {
   const [checkItems, setCheckItems] = useState([]);
-  const [ordersWithNotes, setOrdersWithNotes] = useState([]);
-  const [open, setOpen] = useState(false);
-
-
-  useEffect(() => {
-  }, [checkItems, ordersWithNotes]);
-
   const generateId = () => {
     return uuidv4();
   };
   const commonId = generateId();
-  const addItemToCheckItems = (name, detail, cost, imageUrl, quantity) => {
+  const addItemToCheckItems = (
+    name,
+    detail,
+    cost,
+    imageUrl,
+    note = "",
+    quantity
+  ) => {
     const newItem = {
       id: commonId,
       name: name,
@@ -25,24 +24,16 @@ export default function Index() {
       cost: cost,
       imageUrl: imageUrl,
       quantity: 1,
-    };
-    setCheckItems([...checkItems, newItem]);
-    console.log(checkItems);
-  };
-
-  const addOrderWithNotes = (note) => {
-    const newOrderWithNote = {
-      id: commonId,
       note: note,
     };
-    setOrdersWithNotes([...ordersWithNotes, newOrderWithNote]);
-    console.log(newOrderWithNote);
+    setCheckItems([...checkItems, newItem]);
+    console.log(newItem);
   };
-
   const deleteItem = (itemId) => {
     const updatedItems = checkItems.filter((item) => item.id !== itemId);
     setCheckItems(updatedItems);
   };
+  const [open, setOpen] = useState(false);
   const toggleOpen = () => {
     setOpen(!open);
   };
@@ -71,28 +62,13 @@ export default function Index() {
           </button>
         </div>
       </div>
-
       <div className="flex flex-wrap w-full justify-center gap-5 ">
-        {/*<Check
-          checkItems={checkItems}
-          ordersWithNotes={ordersWithNotes}
-          setCheckItems={setCheckItems}
-          setOrdersWithNotes={setOrdersWithNotes}
-          addItemToCheckItems={addItemToCheckItems}
-          deleteItem={deleteItem}
-        />*/}
-
-        <Acordeon
-          addItemToCheckItems={addItemToCheckItems}
-          addOrderWithNotes={addOrderWithNotes}
-        />
+        <Acordeon addItemToCheckItems={addItemToCheckItems} />
         <Checkout
           open={open}
           setOpen={setOpen}
           checkItems={checkItems}
-          ordersWithNotes={ordersWithNotes}
           setCheckItems={setCheckItems}
-          setOrdersWithNotes={setOrdersWithNotes}
           addItemToCheckItems={addItemToCheckItems}
           deleteItem={deleteItem}
         />
