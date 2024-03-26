@@ -15,11 +15,16 @@ export default function Checkout({
 
   const recordOrder = async () => {
     try {
-      const formattedRequests = checkItems.map((item) => ({
-        food: item.name,
-        count: item.quantity,
-        note: item.note,
-      }));
+      const formattedRequests = [];
+
+      checkItems.forEach((food) => {
+        for(let i = 0; i < food.quantity; i++) {
+          formattedRequests.push({
+            food: food.name,
+            note: food.note,
+          });
+        }
+      });
 
       const response = await fetch(
         "http://localhost:8080/api/v1/order/record",
@@ -46,11 +51,16 @@ export default function Checkout({
   };
 
   useEffect(() => {
-    const formattedRequests = checkItems.map((food) => ({
-      food: food.name,
-      count: food.quantity,
-      note: food.note,
-    }));
+    const formattedRequests = [];
+
+    checkItems.forEach((food) => {
+      for(let i = 0; i < food.quantity; i++) {
+        formattedRequests.push({
+          food: food.name,
+          note: food.note,
+        });
+      }
+    });
     console.log(formattedRequests);
 
     setOrderRequests(formattedRequests);
