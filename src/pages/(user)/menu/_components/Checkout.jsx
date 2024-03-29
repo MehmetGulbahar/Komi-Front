@@ -148,6 +148,16 @@ export default function Checkout({
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                    <select
+                            className="select select-bordered select-sm w-full max-w-xs"
+                            defaultValue={"Pick a table"}
+                          >
+                            <option>Pick a table</option>
+                            <option>B-1</option>
+                            <option>B-2</option>
+                            <option>B-3</option>
+                            <option>B-4</option>
+                          </select>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Total</p>
                         {checkItems.length > 0 ? (

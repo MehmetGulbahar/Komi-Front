@@ -9,6 +9,7 @@ import Contact from "@/pages/(user)/contact";
 import AboutUs from "@/pages/(user)/about-us";
 import SignUp from "@/pages/(user)/login/_components/SignUp.jsx";
 import Test from "@/pages/(user)/test";
+import WaiterLog from"@/pages/(waiter)/waiterlog";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/waiterlog",
+    element: <WaiterLog />,
+  }
 ]);
 
 export default router;
