@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Ckitems from "./Ckitems";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout({
   open,
@@ -12,13 +13,14 @@ export default function Checkout({
 }) {
   const [orderRequests, setOrderRequests] = useState([]);
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const recordOrder = async () => {
     try {
       const formattedRequests = [];
 
       checkItems.forEach((food) => {
-        for(let i = 0; i < food.quantity; i++) {
+        for (let i = 0; i < food.quantity; i++) {
           formattedRequests.push({
             food: food.name,
             note: food.note,
@@ -56,7 +58,7 @@ export default function Checkout({
     const formattedRequests = [];
 
     checkItems.forEach((food) => {
-      for(let i = 0; i < food.quantity; i++) {
+      for (let i = 0; i < food.quantity; i++) {
         formattedRequests.push({
           food: food.name,
           note: food.note,
@@ -71,6 +73,14 @@ export default function Checkout({
   const deleteOperation = (itemId) => {
     const updatedItems = checkItems.filter((item) => item.id !== itemId);
     setCheckItems(updatedItems);
+  };
+  const handleCheckout = () => {
+    const userLoggedIn = Boolean(token);
+    if (userLoggedIn) {
+      recordOrder();
+    } else {
+      navigate("/login");
+    }
   };
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -150,15 +160,19 @@ export default function Checkout({
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                    <select id="masa-select"
-                            className="select select-bordered select-sm w-full max-w-xs"
-                          >
-                            <option value={""} disabled selected hidden>Pick a table</option>
-                            <option value={"1"}>B-1</option>
-                            <option value={"2"}>B-2</option>
-                            <option value={"3"}>B-3</option>
-                            <option value={"4"}>B-4</option>
-                          </select>
+                      <select
+                        id="masa-select"
+                        className="select select-bordered select-sm w-full max-w-xs"
+                      >
+                        <option value={""} disabled hidden defaultValue>
+                          Pick a table
+                        </option>
+                        <option value={"1"}>B-1</option>
+                        <option value={"2"}>B-2</option>
+                        <option value={"3"}>B-3</option>
+                        <option value={"4"}>B-4</option>
+                      </select>
+
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Total</p>
                         {checkItems.length > 0 ? (
@@ -176,7 +190,7 @@ export default function Checkout({
                         <a
                           href="#"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                          onClick={recordOrder}
+                          onClick={(recordOrder, handleCheckout)}
                         >
                           Checkout
                         </a>
