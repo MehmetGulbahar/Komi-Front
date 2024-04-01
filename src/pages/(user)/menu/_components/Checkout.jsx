@@ -152,7 +152,6 @@ export default function Checkout({
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <select id="masa-select"
                             className="select select-bordered select-sm w-full max-w-xs"
-                            defaultValue={"Pick a table"}
                           >
                             <option value={""} disabled selected hidden>Pick a table</option>
                             <option value={"1"}>B-1</option>
