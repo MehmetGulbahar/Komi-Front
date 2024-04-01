@@ -26,8 +26,10 @@ export default function Checkout({
         }
       });
 
+      const $masaId = document.getElementById("masa-select").value;
+
       const response = await fetch(
-        "http://localhost:8080/api/v1/order/record",
+        "http://localhost:8080/api/v1/order/record?masaId=" + $masaId,
         {
           method: "POST",
           headers: {
@@ -148,15 +150,15 @@ export default function Checkout({
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                    <select
+                    <select id="masa-select"
                             className="select select-bordered select-sm w-full max-w-xs"
                             defaultValue={"Pick a table"}
                           >
-                            <option>Pick a table</option>
-                            <option>B-1</option>
-                            <option>B-2</option>
-                            <option>B-3</option>
-                            <option>B-4</option>
+                            <option value={""} disabled selected hidden>Pick a table</option>
+                            <option value={"1"}>B-1</option>
+                            <option value={"2"}>B-2</option>
+                            <option value={"3"}>B-3</option>
+                            <option value={"4"}>B-4</option>
                           </select>
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Total</p>
