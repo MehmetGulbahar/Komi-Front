@@ -28,10 +28,10 @@ export default function Request() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="h-full">
       {orders.map((order) => (
-        <div key={order.order.id} className="mt-8 overflow-x-auto">
-          <div className="shadow-md rounded-lg overflow-hidden">
+        <div key={order.order.id} className="overflow-x-auto">
+          <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden min-h-screen h-full">
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
