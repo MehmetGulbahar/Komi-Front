@@ -6,7 +6,7 @@ export default function index(){
 
     return(
         <div>
-            <Request/>
+        <Request/>
         <BottomNav/>
         </div>
         
