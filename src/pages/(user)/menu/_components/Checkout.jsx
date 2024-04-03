@@ -65,7 +65,6 @@ export default function Checkout({
         });
       }
     });
-    console.log(formattedRequests);
 
     setOrderRequests(formattedRequests);
   }, [checkItems]);

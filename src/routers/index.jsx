@@ -9,7 +9,8 @@ import Contact from "@/pages/(user)/contact";
 import AboutUs from "@/pages/(user)/about-us";
 import SignUp from "@/pages/(user)/login/_components/SignUp.jsx";
 import Test from "@/pages/(user)/test";
-import WaiterLog from"@/pages/(waiter)/waiterlog";
+import WaiterLog from "@/pages/(waiter)/waiterlog";
+import OrderDetails from "../pages/(waiter)/waiterlog/_components/OrderDetails";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         path: "signUp",
         element: <SignUp />,
       },
+      {
+        path: "orderdetails",
+        element: <OrderDetails />,
+      },
     ],
   },
   {
@@ -63,7 +68,7 @@ const router = createBrowserRouter([
   {
     path: "/waiterlog",
     element: <WaiterLog />,
-  }
+  },
 ]);
 
 export default router;

@@ -12,7 +12,7 @@ function Index() {
   return user || !user ? (
     <>
       <Navbar />
-      {!token && <AuthCheck />}
+      {token && <AuthCheck />}
       <Outlet />
       <Footer />
     </>

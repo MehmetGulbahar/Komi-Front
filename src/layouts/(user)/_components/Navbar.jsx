@@ -172,10 +172,12 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
+                <button className="justify-between">
                   {user?.value?.firstname} {user?.value?.lastname}
-                  <span className="badge">Profile</span>
-                </a>
+                  <NavLink to={"/waiterlog"} className="badge">
+                    Profile
+                  </NavLink>
+                </button>
               </li>
               <li>
                 <a>Settings</a>
