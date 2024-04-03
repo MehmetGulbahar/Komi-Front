@@ -28,7 +28,7 @@ export default function Request() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="h-full ">
       <div className="">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden min-h-screen h-full">
@@ -63,7 +63,7 @@ export default function Request() {
                     <td className="px-5 py-5 bg-white text-sm">
                       <span
                         className={`relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight ${
-                          order.order.orderStatus === "Waiting"
+                          order.order.orderStatus === "RECORDED"
                             ? "text-yellow-800 bg-yellow-50"
                             : "text-green-800 bg-green-50"
                         }`}

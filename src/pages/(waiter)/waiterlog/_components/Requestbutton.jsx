@@ -45,7 +45,7 @@ export default function Requestbutton({ plates }) {
               <Menu.Item>
                 {({ active }) => (
                   <button
-                    onClick={openModal}
+                    onClick={()=>document.getElementById('my_modal_2').showModal()}
                     className={classNames(
                       active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                       "block px-4 py-2 text-sm w-full text-left"
@@ -86,6 +86,7 @@ export default function Requestbutton({ plates }) {
         </Transition>
       </Menu>
 
+      {/*
       {isModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto  ">
           <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0 ">
@@ -111,6 +112,21 @@ export default function Requestbutton({ plates }) {
           </div>
         </div>
       )}
+      */}                
+    
+
+      
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box text-left">
+          <h3 className="font-bold text-lg">Hello!</h3>
+          <p className="text-left">
+          <OrderDetails plates={plates} />
+          </p>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </Fragment>
   );
 }

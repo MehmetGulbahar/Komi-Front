@@ -2,17 +2,19 @@ import React from "react";
 
 const OrderDetails = ({ plates }) => {
   return (
-    <div className="p-8 mt-10">
-      <div className="bg-white  mx-auto p-5 rounded-md shadow-lg bg-gray-50">
+    <div className="">
+      <div className=" bg-transparent  mx-auto p-5 rounded-md  ">
         {plates.map((plate) => (
           <div key={plate.id}>
-            <p>Plate ID: {plate.id}</p>
-            <p>Food: {plate.food}</p>
-            <p>Note: {plate.note}</p>
-            <hr className="my-2" />
+          <p>Plate ID: {plate.id}</p>
+          <ul className="list-disc">
+            <li><p>Food: {plate.food}</p></li>
+            <li><p>Note: {plate.note}</p></li>
+          </ul>
+            <hr className="my-1" />
           </div>
         ))}
-        <div className="text-right"></div>
+        
       </div>
     </div>
   );
