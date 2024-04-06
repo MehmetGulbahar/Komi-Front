@@ -13,8 +13,7 @@ const OrderDetails = ({ plates }) => {
           </ul>
             <hr className="my-1" />
           </div>
-        ))}
-        
+        ))} 
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import Requestbutton from "./Requestbutton";
 
 export default function Request() {
   const [orders, setOrders] = useState([]);
-  const token = localStorage.getItem("token"); 
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/order/viewAll", {
@@ -72,7 +72,7 @@ export default function Request() {
                       </span>
                     </td>
                     <td className="px-5 py-5 bg-white text-sm text-right">
-                        <Requestbutton plates={order.plates} />
+                      <Requestbutton plates={order.plates} />
                     </td>
                   </tr>
                 ))}
