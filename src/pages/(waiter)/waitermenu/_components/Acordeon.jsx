@@ -42,7 +42,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex === activeTab ? null : tabIndex);
   };
-  
+
   const handleSelectChange = (event) => {
     const selectedIndex = parseInt(event.target.value, 10);
     handleTabClick(selectedIndex);
@@ -52,8 +52,12 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
   };
   return (
     <div className=" flex w-full flex-wrap  gap-3 m-2">
+       
+  
       {/* Starter Cards */}
-      <div className="sm:hidden w-full">
+
+
+    <div className="sm:hidden w-full">
     <select className="select select-bordered w-full" onChange={handleSelectChange}>
     <option value="1">Starters</option>
     <option value="2">Main Courses</option>

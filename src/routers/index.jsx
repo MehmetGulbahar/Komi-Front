@@ -10,6 +10,10 @@ import AboutUs from "@/pages/(user)/about-us";
 import SignUp from "@/pages/(user)/login/_components/SignUp.jsx";
 import Test from "@/pages/(user)/test";
 import WaiterLog from "@/pages/(waiter)/waiterlog";
+import WaiterTables from "@/pages/(waiter)/waitertables";
+import WaiterMenu from"@/pages/(waiter)/waitermenu";
+import BottomNav from "../layouts/(waiter)/Bottom";
+import WaiterKitchen from "@/pages/(waiter)/waiterkitchen";
 import OrderDetails from "../pages/(waiter)/waiterlog/_components/OrderDetails";
 
 const router = createBrowserRouter([
@@ -69,6 +73,18 @@ const router = createBrowserRouter([
     path: "/waiterlog",
     element: <WaiterLog />,
   },
+  {
+    path: "/waitertables",
+    element: <WaiterTables />,
+  },
+  {
+    path: "/waitermenu",
+    element: <WaiterMenu />,
+  },
+  {
+    path:"/waiterkitchen",
+    element: <WaiterKitchen/>,
+  }
 ]);
 
 export default router;
