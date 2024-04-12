@@ -15,6 +15,9 @@ import WaiterMenu from"@/pages/(waiter)/waitermenu";
 import BottomNav from "../layouts/(waiter)/Bottom";
 import WaiterKitchen from "@/pages/(waiter)/waiterkitchen";
 import OrderDetails from "../pages/(waiter)/waiterlog/_components/OrderDetails";
+import CookLog from"@/pages/(cook)/cooklog";
+import CookUpdate from "@/pages/(cook)/cookupdate";
+
 
 const router = createBrowserRouter([
   {
@@ -84,6 +87,14 @@ const router = createBrowserRouter([
   {
     path:"/waiterkitchen",
     element: <WaiterKitchen/>,
+  },
+  {
+    path:"/cooklog",
+    element: <CookLog/>,
+  },
+  {
+    path:"/cookupdate",
+    element: <CookUpdate/>,
   }
 ]);
 
