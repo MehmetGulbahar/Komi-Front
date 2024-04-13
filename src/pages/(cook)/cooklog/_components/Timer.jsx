@@ -39,10 +39,16 @@ const CountdownTimer = ({ time }) => {
     <div className='w-full flex items-center'>
       <h4 className='font-bold'>{formatTimeLeft()}</h4>
       <progress
-        className={`progress ${className} w-56 ml-4`}
+        className={`progress ${className} w-36 ml-4`}
         value={progress}
         max="100"
       ></progress>
+       <a
+                  href="#"
+                  className=" ml-4 mr-1 inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700"
+                >
+                  Ready!
+                </a>
     </div>
   );
 };

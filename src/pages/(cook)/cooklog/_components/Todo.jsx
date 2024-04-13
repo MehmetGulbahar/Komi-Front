@@ -30,8 +30,10 @@ export default function Todo(){
               <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                 2
               </td>
-              <td className="whitespace-nowrap col-span-3 px-4 py-2">
+              <td className="whitespace-nowrap col-span-2 px-4 py-2">
+                
               <Timer time={5}/>
+             
               </td>
              
             </tr>
