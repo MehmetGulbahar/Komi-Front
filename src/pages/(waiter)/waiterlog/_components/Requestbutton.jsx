@@ -20,7 +20,7 @@ export default function Requestbutton({ plates, orderId }) {
 
   const handleAccept = () => {
     fetch(
-      `http://localhost:8080/api/v1/order/confirm?id=${orderId}&accept=true`,
+      `http://localhost:8080/api/v1/order/confirm_waiter?id=${orderId}&accept=true`,
       {
         method: "POST",
         credentials: "include",
@@ -42,7 +42,7 @@ export default function Requestbutton({ plates, orderId }) {
 
   const handleReject = () => {
     fetch(
-      `http://localhost:8080/api/v1/order/confirm?id=${orderId}&accept=false`,
+      `http://localhost:8080/api/v1/order/confirm_waiter?id=${orderId}&accept=false`,
       {
         method: "POST",
         credentials: "include",
