@@ -72,7 +72,7 @@ export default function Request() {
                       </span>
                     </td>
                     <td className="px-5 py-5 bg-white text-sm text-right">
-                      <Requestbutton plates={order.plates} />
+                      <Requestbutton orderId= {order.order.id} plates={order.plates} />
                     </td>
                   </tr>
                 ))}
