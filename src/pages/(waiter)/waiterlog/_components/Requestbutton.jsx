@@ -6,8 +6,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Requestbutton({ plates }) {
+export default function Requestbutton({ plates, orderId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const token = localStorage.getItem("token");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -15,6 +16,50 @@ export default function Requestbutton({ plates }) {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleAccept = () => {
+    fetch(
+      `http://localhost:8080/api/v1/order/confirm?id=${orderId}&accept=true`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        closeModal();
+      })
+      .catch((error) => {
+        console.error("Error accepting order:", error);
+      });
+  };
+
+  const handleReject = () => {
+    fetch(
+      `http://localhost:8080/api/v1/order/confirm?id=${orderId}&accept=false`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        closeModal();
+      })
+      .catch((error) => {
+        console.error("Error rejecting order:", error);
+      });
   };
 
   return (
@@ -57,28 +102,28 @@ export default function Requestbutton({ plates }) {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="#"
+                  <button
+                    onClick={handleAccept}
                     className={classNames(
                       active ? "bg-gray-100 text-gray-900" : "text-lime-700",
                       "block px-4 py-2 text-sm"
                     )}
                   >
                     Accept
-                  </a>
+                  </button>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="#"
+                  <button
+                    onClick={handleReject}
                     className={classNames(
                       active ? "bg-gray-100 text-gray-900" : "text-red-700",
                       "block px-4 py-2 text-sm"
                     )}
                   >
                     Reject
-                  </a>
+                  </button>
                 )}
               </Menu.Item>
             </div>
