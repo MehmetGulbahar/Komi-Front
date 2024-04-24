@@ -1,6 +1,6 @@
 import React from "react";
 
-const OrderDetails = ({ plates }) => {
+const OrderDetails = ({ plates, orderid }) => {
   return (
     <div className="">
       <div className=" bg-transparent  mx-auto p-5 rounded-md  ">
