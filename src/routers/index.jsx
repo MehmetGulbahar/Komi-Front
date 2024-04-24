@@ -17,6 +17,7 @@ import WaiterKitchen from "@/pages/(waiter)/waiterkitchen";
 import OrderDetails from "../pages/(waiter)/waiterlog/_components/OrderDetails";
 import CookLog from"@/pages/(cook)/cooklog";
 import CookUpdate from "@/pages/(cook)/cookupdate";
+import AdminHome from "@/pages/(admin)/adminhome/index.jsx";
 
 
 const router = createBrowserRouter([
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
   {
     path:"/cookupdate",
     element: <CookUpdate/>,
+  },
+  {
+    path:"/adminhome",
+    element: <AdminHome/>,
   }
 ]);
 

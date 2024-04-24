@@ -3,6 +3,7 @@ import Acordeon from "./_components/Acordeon";
 import Check from "./_components/Check";
 import { v4 as uuidv4 } from "uuid";
 import Checkout from "./_components/Checkout";
+import Orderstatus from "./_components/Orderstatus";
 export default function Index() {
   const [checkItems, setCheckItems] = useState([]);
   const generateId = () => {
@@ -39,6 +40,7 @@ export default function Index() {
   };
   return (
     <div>
+      <Orderstatus status = {5}/>
       <div className="toast toast-end z-10">
         <div className="indicator">
           <span className="indicator-item badge badge-accent">
