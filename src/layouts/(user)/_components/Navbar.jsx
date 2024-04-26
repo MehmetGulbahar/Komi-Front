@@ -76,7 +76,7 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `${
                   isActive ? "underline" : ""
-                } text-black hover:text-black focus:outline-none`
+                } text-black hover:text-black  focus:outline-none`
               }
             >
               {" "}

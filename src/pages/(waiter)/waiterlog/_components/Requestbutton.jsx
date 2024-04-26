@@ -9,6 +9,7 @@ function classNames(...classes) {
 export default function Requestbutton({ plates, orderId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = localStorage.getItem("token");
+  const [orders, setOrders] = useState([]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -16,6 +17,10 @@ export default function Requestbutton({ plates, orderId }) {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+  const deleteOperation = (orderId) => {
+    const updatedOrders = orders.filter((order) => order.order.id !== orderId);
+    setOrders(updatedOrders);
   };
 
   const handleAccept = () => {
@@ -34,6 +39,8 @@ export default function Requestbutton({ plates, orderId }) {
           throw new Error("Network response was not ok");
         }
         closeModal();
+        deleteOperation(orderId);
+        console.log("Basariyla silindi !");
       })
       .catch((error) => {
         console.error("Error accepting order:", error);

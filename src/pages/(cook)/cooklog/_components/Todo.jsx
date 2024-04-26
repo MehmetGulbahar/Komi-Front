@@ -4,15 +4,6 @@ import Timer from "./Timer";
 export default function Todo() {
   const token = localStorage.getItem("token");
   const [orders, setOrders] = useState([]);
-  const [isAccepted, setIsAccepted] = useState(false);
-
-  const openModal = () => {
-    setIsAccepted(true);
-  };
-
-  const closeModal = () => {
-    setIsAccepted(false);
-  };
 
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/order/viewAll/cook", {
@@ -29,7 +20,10 @@ export default function Todo() {
         return response.json();
       })
       .then((data) => {
-        setOrders(data);
+        const filteredOrders = data.filter(
+          (order) => order.order.orderStatus === "COOK_ACCEPT"
+        );
+        setOrders(filteredOrders);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 function Index() {
   const user = useSelector((state) => state.user.value);
   const token = localStorage.getItem("token");
-
   return user || !user ? (
     <>
       <Navbar />
