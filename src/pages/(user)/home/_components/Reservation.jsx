@@ -5,6 +5,8 @@ import TimePicker from "react-time-picker";
 import { FaUsers, FaCalendar, FaClock } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "./variants";
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
 
 const Reservation = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -73,7 +75,7 @@ const Reservation = () => {
             <div className="flex flex-col lg:flex-row gap-4 items-center">
               <div className="flex items-center gap-x-2 font-semibold text-dark text-base mb-3">
                 <FaCalendar />
-                <div>Choose Date</div>
+                
               </div>
               <DatePicker
                 className="input"
@@ -84,20 +86,25 @@ const Reservation = () => {
             <div className="flex flex-col lg:flex-row gap-4 items-center">
               <div className="flex items-center gap-x-2 font-semibold text-dark text-base mb-3">
                 <FaClock />
-                <div>Choose Time</div>
+                
               </div>
+              
               <TimePicker
                 className="input"
+                type="input"
                 clearIcon={false}
                 clockIcon={false}
                 onChange={setValue}
-                value={value}
+                hourInputClassName="w-30"
+                minuteInputClassName="w-30"
               />
+              
+              
             </div>
             <div className="flex flex-col lg:flex-row gap-4 items-center">
               <div className="flex items-center gap-x-2 font-semibold text-dark text-base mb-3">
                 <FaUsers />
-                <div>How many people ?</div>
+                
               </div>
               <input className="input" type="text" placeholder="1" />
             </div>
