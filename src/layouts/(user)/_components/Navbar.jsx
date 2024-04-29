@@ -138,7 +138,8 @@ export default function Navbar() {
             }
           >
             {" "}
-            <li className="mr-8">RESERVATION</li>
+           
+            <li className="mr-8 ">RESERVATION</li>
           </NavLink>
           <NavLink
             to="/place"

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
 import fish from "@/assets/img/fish.jpg";
@@ -9,7 +9,7 @@ export default function Features() {
   return (
     <div className="mt-5 md:mt-20">
       <h1 className="text-4xl lg:text-5xl xl:text-6xl text-center underline decoration-amber-400 mb-4">
-        The Secret of Flavor, The Choice of Quality!
+        <Typewriter text="The Secret of Flavor, The Choice of Quality!" />
       </h1>
       <div className="h-20"></div>
       <div className="bg-white">
@@ -37,6 +37,25 @@ export default function Features() {
       </div>
     </div>
   );
+}
+
+const Typewriter = ({ text }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setDisplayText((prevText) => prevText + text[index]);
+        setIndex((prevIndex) => prevIndex + 1);
+      } else {
+        clearInterval(interval);
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  }, [index, text]);
+
+  return <span>{displayText}</span>;
 };
 
 const IMG_PADDING = 12;

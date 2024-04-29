@@ -3,17 +3,19 @@ import kitchen from "@/assets/img/cooker.jpg";
 
 const TypewriterEffect = ({ text, delay }) => {
   const [displayText, setDisplayText] = useState("");
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    let currentIndex = 0;
     const interval = setInterval(() => {
-      setDisplayText((prevText) => prevText + text[currentIndex]);
-      currentIndex++;
-      if (currentIndex === text.length) clearInterval(interval);
-    }, delay);
-
+      if (index < text.length) {
+        setDisplayText((prevText) => prevText + text[index]);
+        setIndex((prevIndex) => prevIndex + 1);
+      } else {
+        clearInterval(interval);
+      }
+    }, 30);
     return () => clearInterval(interval);
-  }, [text, delay]);
+  }, [index, text]);
 
   return <span>{displayText}</span>;
 };
@@ -39,7 +41,7 @@ export default function Info() {
           style={pasifico}
         >
           <TypewriterEffect
-            text="Innovation on the Plate: Unveiling Our Journey"
+            text="Innovation on the Plate: Unveiling Our Journey!"
             delay={50}
           />
         </h1>
