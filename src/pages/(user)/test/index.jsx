@@ -1,5 +1,4 @@
 import React from "react";
-import "@/pages/(user)/home/_components/Info.css";
 import kitchen from "@/assets/img/cooker.jpg";
 
 /* const Title = ({ fontStyle }) => (

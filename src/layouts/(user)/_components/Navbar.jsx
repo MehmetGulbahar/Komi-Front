@@ -26,7 +26,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-200 rounded-3xl">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -117,7 +117,7 @@ export default function Navbar() {
               } text-black hover:text-black focus:outline-none`
             }
           >
-            <li className="mr-4">HOME</li>
+            <li className="mr-8">HOME</li>
           </NavLink>
           <NavLink
             to="/menu"
@@ -127,7 +127,7 @@ export default function Navbar() {
               } text-black hover:text-black focus:outline-none`
             }
           >
-            <li className="mr-4">MENU</li>
+            <li className="mr-8">MENU</li>
           </NavLink>
           <NavLink
             to="/reservation"
@@ -138,7 +138,7 @@ export default function Navbar() {
             }
           >
             {" "}
-            <li className="mr-4">RESERVATION</li>
+            <li className="mr-8">RESERVATION</li>
           </NavLink>
           <NavLink
             to="/place"
@@ -148,7 +148,7 @@ export default function Navbar() {
               } text-black hover:text-black focus:outline-none`
             }
           >
-            <li className="mr-4">PLACE</li>
+            <li className="mr-8">PLACE</li>
           </NavLink>
         </ul>
       </div>
@@ -178,6 +178,11 @@ export default function Navbar() {
                     Profile
                   </NavLink>
                 </button>
+                {user?.role === "ADMIN" && (
+                  <NavLink to={"/adminhome"}>
+                    <a>Admin Panel</a>
+                  </NavLink>
+                )}
               </li>
               <li>
                 <a>Settings</a>

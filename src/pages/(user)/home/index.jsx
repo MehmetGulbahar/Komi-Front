@@ -10,6 +10,7 @@ export default function index() {
       <Hero />
       <Info />
       <Features />
+      <Reservation />
       <Services />
     </div>
   );

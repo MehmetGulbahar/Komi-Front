@@ -15,7 +15,7 @@ export default function index() {
     </>
   ) : (
     <>
-      <div className="flex items-center justify-center h-screen font-bold font-mono italic text-2xl ">
+      <div className="flex items-center justify-center h-screen font-bold font-mono italic text-2xl  w-screen bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100 ">
         ACCESS DENIED
       </div>
     </>

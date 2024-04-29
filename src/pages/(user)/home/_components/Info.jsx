@@ -1,6 +1,22 @@
-import React from "react";
-import "./Info.css";
+import React, { useState, useEffect } from "react";
 import kitchen from "@/assets/img/cooker.jpg";
+
+const TypewriterEffect = ({ text, delay }) => {
+  const [displayText, setDisplayText] = useState("");
+
+  useEffect(() => {
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      setDisplayText((prevText) => prevText + text[currentIndex]);
+      currentIndex++;
+      if (currentIndex === text.length) clearInterval(interval);
+    }, delay);
+
+    return () => clearInterval(interval);
+  }, [text, delay]);
+
+  return <span>{displayText}</span>;
+};
 
 export default function Info() {
   const fontStyle = {
@@ -22,7 +38,10 @@ export default function Info() {
           className="text-4xl lg:text-5xl xl:text-6xl text-center underline decoration-amber-400 mb-4"
           style={pasifico}
         >
-          Innovation on the Plate: Unveiling Our Journey
+          <TypewriterEffect
+            text="Innovation on the Plate: Unveiling Our Journey"
+            delay={50}
+          />
         </h1>
         <div className="h-20"></div>
       </div>

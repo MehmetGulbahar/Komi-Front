@@ -63,7 +63,7 @@ export default function Hero() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1, duration: 1 }}
               className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-600"
-              whileHover={{ scale: 1.1 }} // Hover efekti
+              whileHover={{ scale: 1.1 }}
             >
               KOMI
             </motion.span>{" "}
