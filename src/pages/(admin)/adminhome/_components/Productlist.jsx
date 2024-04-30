@@ -66,7 +66,7 @@ export default function Productlist() {
         </thead>
         <tbody>
           {data.map((dish, index) => (
-            <TableRow dish={dish} id={index + 1} />
+            <TableRow key={index} dish={dish} id={index + 1} />
           ))}
         </tbody>
         <tfoot>

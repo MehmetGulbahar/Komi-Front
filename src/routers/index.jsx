@@ -18,6 +18,7 @@ import OrderDetails from "../pages/(waiter)/waiterlog/_components/OrderDetails";
 import CookLog from"@/pages/(cook)/cooklog";
 import CookUpdate from "@/pages/(cook)/cookupdate";
 import AdminHome from "@/pages/(admin)/adminhome/index.jsx";
+import AdminTables from "@/pages/(admin)/admintables/index.jsx";
 import { Switch } from "antd";
 
 
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
   {
     path:"/adminhome",
     element: <AdminHome/>,
+  },
+  {
+    path:"/admintables",
+    element: <AdminTables/>,
   }
 ]);
 

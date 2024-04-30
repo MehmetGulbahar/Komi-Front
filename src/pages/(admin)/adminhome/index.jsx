@@ -14,7 +14,9 @@ export default function index() {
         <div className="w-full">
         <Head/>
         <div className="overflow-x-auto ">
+        
         <Productlist/>
+       
         </div>
         </div>
       </div>
