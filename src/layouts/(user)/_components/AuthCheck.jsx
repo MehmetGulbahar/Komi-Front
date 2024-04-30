@@ -7,6 +7,7 @@ const AuthCheck = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const token = localStorage.getItem("token");
+  console.log(user);
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/auth/check-token", {
       method: "POST",
