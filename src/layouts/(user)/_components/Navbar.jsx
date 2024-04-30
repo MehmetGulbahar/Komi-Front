@@ -181,7 +181,7 @@ export default function Navbar() {
                 </button>
                 {user?.role === "ADMIN" && (
                   <NavLink to={"/adminhome"}>
-                    <a>Admin Panel</a>
+                    Admin Panel
                   </NavLink>
                 )}
               </li>

@@ -5,6 +5,8 @@ export default function Todo() {
   const token = localStorage.getItem("token");
   const [orders, setOrders] = useState([]);
 
+  const ordersId = orders.map((order) => console.log(order.order.id));
+
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/order/viewAll/cook", {
       method: "POST",
@@ -61,7 +63,7 @@ export default function Todo() {
                 Quantity
               </td>
               <td className="whitespace-nowrap px-4 py-2">
-                <Timer time={5} />
+                <Timer orderId={order.order.id} time={5} />
               </td>
               <td className="whitespace-nowrap px-4 py-2"></td>
             </tr>

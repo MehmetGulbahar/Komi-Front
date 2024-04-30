@@ -17,7 +17,6 @@ export default function Index() {
   };
   const handleSignIn = async (e) => {
     e.preventDefault();
-    
 
 
     try {
@@ -38,6 +37,7 @@ export default function Index() {
 
         console.log("Login successful", result);
         navigate("/");
+        
       } else {
         console.error("Login failed", response.status, response.statusText);
         setIsLoginFailed(true);
