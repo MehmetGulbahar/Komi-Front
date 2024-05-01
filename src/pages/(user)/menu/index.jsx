@@ -40,7 +40,7 @@ export default function Index() {
   };
   return (
     <div>
-      <Orderstatus status = {5}/>
+      <Orderstatus status = {3}/> {/** 1,2,3,4,5 diye parametre alarak sipariş statusu return ediyor bişey return etmemesi için 0 yazabilirsiniz */}
       <div className="toast toast-end z-10">
         <div className="indicator">
           <span className="indicator-item badge badge-accent">

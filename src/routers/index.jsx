@@ -17,8 +17,9 @@ import WaiterKitchen from "@/pages/(waiter)/waiterkitchen";
 import OrderDetails from "../pages/(waiter)/waiterlog/_components/OrderDetails";
 import CookLog from"@/pages/(cook)/cooklog";
 import CookUpdate from "@/pages/(cook)/cookupdate";
-import AdminHome from "@/pages/(admin)/adminhome/index.jsx";
+import AdminMenu from "@/pages/(admin)/adminmenu/index.jsx";
 import AdminTables from "@/pages/(admin)/admintables/index.jsx";
+import AdminHome from "@/pages/(admin)/adminhome/index.jsx";
 import { Switch } from "antd";
 
 
@@ -102,12 +103,16 @@ const router = createBrowserRouter([
     element: <CookUpdate/>,
   },
   {
-    path:"/adminhome",
-    element: <AdminHome/>,
+    path:"/adminmenu",
+    element: <AdminMenu/>,
   },
   {
     path:"/admintables",
     element: <AdminTables/>,
+  },
+  {
+    path:"/adminhome", 
+    element: <AdminHome/>
   }
 ]);
 
