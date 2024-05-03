@@ -1,10 +1,26 @@
-/** @type {import('tailwindcss').Config} */
+/** 
+ @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",  ],
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        animatedgradient: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+      },
+      backgroundSize: {
+        '300%': '300%',
+      },
+      animation: {
+        gradient: 'animatedgradient 6s ease infinite alternate',
+      },
+    },
   },
   daisyui: {
     themes: ["light"]
@@ -15,8 +31,6 @@ module.exports = {
     //require('@tailwindcss/forms'),
   ],
 };
-
-
 
 /*
   This example requires some changes to your config:

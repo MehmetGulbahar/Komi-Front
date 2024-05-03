@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import kitchen from "@/assets/img/cooker.jpg";
+import kitchen from "@/assets/img/infopng.jpg";
 
 const TypewriterEffect = ({ text, delay }) => {
   const [displayText, setDisplayText] = useState("");
@@ -52,19 +52,17 @@ export default function Info() {
         style={fontStyle}
         className="flex h-screen items-center justify-center text-center"
       >
-        <h2 className="text-4xl font-bold text-white">
+        <h2 className="text-5xl font-bold text-white">
           <p
-            className="text-lg lg:text-xl xl:text-2xl ps-5 pe-5"
+            className="text-lg lg:text-xl xl:text-3xl ps-5 pe-5"
             style={pasifico}
           >
-            The standard chunk of Lorem Ipsum used since the 1500s is reproduced
-            below for those interested. Sections 1.10.32 and 1.10.33 from "de
-            Finibus Bonorum et Malorum"{" "}
             <a href="#" className="underline font-bold decoration-sky-500">
-              by Cicero
+              by KOMI
             </a>{" "}
-            are also reproduced in their exact original form, accompanied by
-            English versions from the 1914 translation{" "}
+            is an inclusive restaurant automation app, revolutionizing dining
+            with advanced technology for owners, staff, and customers.
+            It’s transforming dining experiences.{" "}
             <a href="#" className="underline font-bold decoration-sky-500">
               by H. Rackam.
             </a>

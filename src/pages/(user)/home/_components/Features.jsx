@@ -8,9 +8,9 @@ import plateFood from "@/assets/img/plateFood.jpg";
 export default function Features() {
   return (
     <div className="mt-5 md:mt-20">
-      <h1 className="text-4xl lg:text-5xl xl:text-6xl text-center underline decoration-amber-400 mb-4">
-        <Typewriter text="The Secret of Flavor, The Choice of Quality!" />
-      </h1>
+      <div className="flex justify-center text-7xl font-bold bg-gradient-to-r from-orange-700 via-blue-500 to-green-400 text-transparent bg-clip-text bg-300% animate-gradient">
+        <span>The Secret of Flavor, The Choice of Quality!</span>
+      </div>
       <div className="h-20"></div>
       <div className="bg-white">
         <TextParallaxContent
@@ -144,15 +144,13 @@ const BuiltContent = () => (
     </h2>
     <div className="col-span-1 md:col-span-8">
       <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
-        KOMI is a restaurant automation application designed with inclusivity
-        and accessibility in mind. It aims to revolutionize the dining
-        experience by integrating advanced technology into everyday operations.
-        From streamlining order processing to managing inventory efficiently,
-        KOMI is built to cater to everyone involved in the restaurant business -
-        be it owners, staff, or customers. Its user-friendly interface and
-        innovative features make it an indispensable tool in the modern
-        restaurant industry. Truly, KOMI is built for all of us, transforming
-        the way we dine, one meal at a time.
+        KOMI is an inclusive and accessible restaurant automation application.
+        It enhances the dining experience by incorporating advanced technology
+        into daily operations, such as order processing and inventory
+        management. KOMI is designed for everyone in the restaurant business,
+        including owners, staff, and customers. Its user-friendly interface and
+        innovative features make it a vital tool in today’s restaurant industry,
+        aiming to transform our dining experiences.
       </p>
     </div>
   </div>
@@ -164,15 +162,13 @@ const CompariseContent = () => (
     </h2>
     <div className="col-span-1 md:col-span-8">
       <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
-        KOMI, the restaurant automation application, is built on the foundation
-        of uncompromising quality. It is designed to deliver superior
-        performance and reliability that restaurant owners, staff, and customers
-        can depend on. From its intuitive user interface to its robust
-        functionality, every aspect of KOMI reflects a dedication to quality. It
-        ensures seamless operations, accurate order processing, and efficient
-        inventory management, all while enhancing the dining experience. With
-        KOMI, quality is not just an expectation, it’s a guarantee. Because at
-        KOMI, we believe in never compromising on quality.
+        KOMI is an inclusive and accessible restaurant automation application.
+        It enhances the dining experience by incorporating advanced technology
+        into daily operations, such as order processing and inventory
+        management. KOMI is designed for everyone in the restaurant business,
+        including owners, staff, and customers. Its user-friendly interface and
+        innovative features make it a vital tool in today’s restaurant industry,
+        aiming to transform our dining experiences.
       </p>
     </div>
   </div>
@@ -184,14 +180,12 @@ const SavorContent = () => (
     </h2>
     <div className="col-span-1 md:col-span-8">
       <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
-        KOMI is a modern solution for the dynamic and fast-paced restaurant
-        industry. It combines cutting-edge technology with superior
-        functionality to deliver an unparalleled dining experience. KOMI is
-        designed to be intuitive, efficient, and reliable, making it a superior
-        choice for restaurant owners, staff, and customers. It modernizes
-        restaurant operations, from order processing to inventory management,
-        ensuring a seamless dining experience. With KOMI, savor the superior
-        taste of modernity in every interaction.
+        KOMI is a modern, efficient, and reliable solution for the bustling
+        restaurant industry. It uses advanced technology to enhance
+        functionality and streamline operations like order processing and
+        inventory management. Designed for restaurant owners, staff, and
+        customers, KOMI aims to provide a seamless dining experience, bringing a
+        taste of modernity to every interaction.
       </p>
     </div>
   </div>

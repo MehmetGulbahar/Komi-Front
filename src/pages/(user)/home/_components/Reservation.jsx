@@ -11,6 +11,7 @@ import 'react-clock/dist/Clock.css';
 const Reservation = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = useState("10:00");
+   const [time, setTime] = useState("12:00"); 
   const pasifico = {
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -29,7 +30,10 @@ const Reservation = () => {
   };
 
   return (
-    <div className="reservation-wrapper bg-gray-400">
+    <div
+      className="reservation-wrapper rounded-xl"
+      style={{ backgroundColor: "#F7F7F7" }}
+    >
       <section id="book" className="relative z-30 pb-20 lg:py-[100px]">
         <div className="container mx-auto px-4 lg:px-0">
           <motion.div
@@ -41,21 +45,21 @@ const Reservation = () => {
             <motion.h2
               variants={fadeIn("up", "tween", 0.2, 1.6)}
               className="h2 capitalize "
-              style={{ ...pasifico, fontSize: "30px" }}
+              style={{ ...pasifico, fontSize: "40px" }}
             >
               {reservationData.title}
             </motion.h2>
             <motion.p
               variants={fadeIn("up", "tween", 0.4, 1.6)}
               className="mb-1 text-dark"
-              style={pasifico}
+              style={{ ...pasifico, fontSize: "22px" }}
             >
               {reservationData.subtitle}
             </motion.p>
             <motion.p
               variants={fadeIn("up", "tween", 0.4, 1.6)}
               className="mb-8 text-dark"
-              style={pasifico}
+              style={{ ...pasifico, fontSize: "22px" }}
             >
               {reservationData.subtitle2}
             </motion.p>
@@ -75,7 +79,6 @@ const Reservation = () => {
             <div className="flex flex-col lg:flex-row gap-4 items-center">
               <div className="flex items-center gap-x-2 font-semibold text-dark text-base mb-3">
                 <FaCalendar />
-                
               </div>
               <DatePicker
                 className="input"
@@ -86,35 +89,52 @@ const Reservation = () => {
             <div className="flex flex-col lg:flex-row gap-4 items-center">
               <div className="flex items-center gap-x-2 font-semibold text-dark text-base mb-3">
                 <FaClock />
-                
               </div>
-              
+
               <TimePicker
                 className="input"
                 type="input"
                 clearIcon={false}
                 clockIcon={false}
-                onChange={setValue}
+                onChange={(newValue) => {
+                  setValue(newValue);
+                  setTime(newValue);
+                }}
                 hourInputClassName="w-30"
                 minuteInputClassName="w-30"
+                value={time}
               />
-              
-              
             </div>
             <div className="flex flex-col lg:flex-row gap-4 items-center">
               <div className="flex items-center gap-x-2 font-semibold text-dark text-base mb-3">
                 <FaUsers />
-                
               </div>
               <input className="input" type="text" placeholder="1" />
             </div>
             <div className="flex flex-col lg:flex-row gap-4 items-center">
-              <button className="relative inline-flex h-12 overflow-hidden rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                  {reservationData.btnText}
+              <a
+                href="https://websitecost.today/"
+                target="_blank"
+                className="group relative overflow-hidden focus:ring-4 focus:ring-blue-300 inline-flex items-center px-7 py-2.5 rounded-lg text-white justify-center"
+                style={{ backgroundColor: "#76ABAE" }}
+              >
+                <span className="z-40" style={{ backgroundColor: "1B1A55" }}>
+                  Make a Reservation
                 </span>
-              </button>
+                <svg
+                  className="z-40 ml-2 -mr-1 w-3 h-3 transition-all duration-300 group-hover:translate-x-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <div className="absolute inset-0 h-[200%] w-[200%] rotate-45 translate-x-[-70%] transition-all group-hover:scale-100 bg-white/30 group-hover:translate-x-[50%] z-20 duration-1000"></div>
+              </a>
             </div>
           </motion.form>
         </div>

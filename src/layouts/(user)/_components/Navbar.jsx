@@ -26,7 +26,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar bg-base-200 rounded-3xl">
+    <div className="navbar bg-base-200 rounded-b-2xl border-b-4 border-black ">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -108,13 +108,13 @@ export default function Navbar() {
       </div>
 
       <div className="flex justify-center navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-10 text-xl">
           <NavLink
             to="/"
             className={({ isActive }) =>
               `${
-                isActive ? "underline" : ""
-              } text-black hover:text-black focus:outline-none`
+                isActive ? "font-bold" : ""
+              } text-black hover:text-black focus:outline-none relative inline cursor-pointer text-xl font-medium before:bg-red-600 before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-75`
             }
           >
             <li className="mr-8">HOME</li>
@@ -123,8 +123,8 @@ export default function Navbar() {
             to="/menu"
             className={({ isActive }) =>
               `${
-                isActive ? "underline" : ""
-              } text-black hover:text-black focus:outline-none`
+                isActive ? "font-bold" : ""
+              } text-black hover:text-black focus:outline-none relative inline cursor-pointer text-xl font-medium before:bg-red-600 before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-75`
             }
           >
             <li className="mr-8">MENU</li>
@@ -133,20 +133,19 @@ export default function Navbar() {
             to="/reservation"
             className={({ isActive }) =>
               `${
-                isActive ? "underline" : ""
-              } text-black hover:text-black focus:outline-none`
+                isActive ? "font-bold" : ""
+              } text-black hover:text-black focus:outline-none relative inline cursor-pointer text-xl font-medium before:bg-red-600 before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-75`
             }
           >
             {" "}
-           
             <li className="mr-8 ">RESERVATION</li>
           </NavLink>
           <NavLink
             to="/place"
             className={({ isActive }) =>
               `${
-                isActive ? "underline" : ""
-              } text-black hover:text-black focus:outline-none`
+                isActive ? "font-bold" : ""
+              } text-black hover:text-black focus:outline-none relative inline cursor-pointer text-xl font-medium before:bg-red-600 before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-75`
             }
           >
             <li className="mr-8">PLACE</li>
@@ -157,7 +156,10 @@ export default function Navbar() {
       <div className="navbar-end">
         {user?.firstname ? (
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} className="avatar placeholder">
+            <div
+              tabIndex={0}
+              className="avatar placeholder  rounded-full border border-1 border-red-700"
+            >
               <div
                 className="bg-slate-700 text-neutral-content rounded-full w-12"
                 style={{ cursor: "pointer" }}
@@ -170,19 +172,15 @@ export default function Navbar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 border border-2 border-black"
             >
               <li>
-                <button className="justify-between">
+                <button className="justify-between ">
                   {user?.value?.firstname} {user?.value?.lastname}
-                  <NavLink to={"/waiterlog"} className="badge">
-                    Profile
-                  </NavLink>
+                  <NavLink>Profile</NavLink>
                 </button>
                 {user?.role === "ADMIN" && (
-                  <NavLink to={"/adminhome"}>
-                    Admin Panel
-                  </NavLink>
+                  <NavLink to={"/adminhome"}>Admin Panel</NavLink>
                 )}
               </li>
               <li>

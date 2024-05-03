@@ -10,7 +10,7 @@ export default function Hero() {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200 bg-gray-300 rounded-2xl">
+    <div className="hero min-h-screen bg-base-200 bg-zinc-100 ">
       <div className="hero-content flex-col lg:flex-row-reverse items-center justify-center">
         <motion.img
           src={specialfood}
