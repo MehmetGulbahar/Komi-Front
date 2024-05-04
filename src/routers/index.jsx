@@ -20,6 +20,9 @@ import CookUpdate from "@/pages/(cook)/cookupdate";
 import AdminMenu from "@/pages/(admin)/adminmenu/index.jsx";
 import AdminTables from "@/pages/(admin)/admintables/index.jsx";
 import AdminHome from "@/pages/(admin)/adminhome/index.jsx";
+import AdminAuthorize from "@/pages/(admin)/adminauthorize/index.jsx";
+import AdminBlackList from "@/pages/(admin)/adminblacklist/index.jsx";
+
 import { Switch } from "antd";
 
 
@@ -113,6 +116,16 @@ const router = createBrowserRouter([
   {
     path:"/adminhome", 
     element: <AdminHome/>
+  }
+  ,
+  {
+    path:"/adminauthorize", 
+    element: <AdminAuthorize/>
+  }
+  ,
+  {
+    path:"/adminblacklist", 
+    element: <AdminBlackList/>
   }
 ]);
 

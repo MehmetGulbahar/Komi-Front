@@ -1,8 +1,8 @@
 import React from "react";
 export default function Statts() {
   return (
-    <div>
-      <div className="stats stats-vertical lg:stats-horizontal shadow">
+    <div className="w-full">
+      <div className="stats stats-vertical lg:stats-horizontal shadow w-full">
         <div className="stat">
           <div className="stat-title">Total Tables</div>
           <div className="stat-value">85</div>

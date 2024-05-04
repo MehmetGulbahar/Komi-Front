@@ -35,12 +35,12 @@ export default function AdminNavigation (){
                 </NavLink>
               </li>
               <li className="text-xl font-semibold">
-                <NavLink to="/authorization" activeClassName="font-bold">
+                <NavLink to="/adminauthorize" activeClassName="font-bold">
                   <LockClosedIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />Authorization
                 </NavLink>
               </li>
               <li className="text-xl font-semibold">
-                <NavLink to="/black-list" activeClassName="font-bold">
+                <NavLink to="/adminblacklist" activeClassName="font-bold">
                   <UserMinusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />Black List
                 </NavLink>
               </li>

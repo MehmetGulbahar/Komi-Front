@@ -1,5 +1,5 @@
 import React from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import { ChevronLeftIcon, ChevronRightIcon, TrashIcon, PencilSquareIcon } from '@heroicons/react/20/solid';
 
 const TableRow = ({ dish, id }) => (
   
@@ -28,9 +28,109 @@ const TableRow = ({ dish, id }) => (
       
     </td>
     <td>{dish.category}</td>
-    <th>
-      <button className="btn btn-ghost btn-xs">details</button>
-    </th>
+    <td> <span className="hidden sm:block">
+          <button
+            type="button"
+            className="mr-2 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          >
+            <TrashIcon
+              className="-ml-0.5 mr-0.5 h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </button>
+        
+          <button
+            type="button"
+            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          onClick={()=>document.getElementById('EditForm').showModal()}
+          >
+            <PencilSquareIcon
+              className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+            Edit
+          </button>
+          <dialog
+            id="EditForm"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Edit Dish</h3>
+             <form action="">
+             <div className="sm:col-span-4">
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                Dish Name
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    autoComplete="username"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Dish Name"
+                  />
+                </div>
+              </div></div>
+              <div className="w-full">
+              <div className="">
+                <label
+                  htmlFor="category"
+                  className="block text-xs font-medium leading-6 text-gray-900"
+                >
+                  Category
+                </label>
+                <div className="mt-2">
+                  <select
+                    id="category"
+                    name="category"
+          
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  >
+                    <option >Starter</option>
+                    <option >Main Course</option>
+                    <option >Dessert</option>
+                  </select>
+                </div>
+              </div>
+               <div className="w-36">
+               <label
+                  for="first-name"
+                  className="block  font-medium leading-6 text-gray-900 text-sm"
+                >
+                  Serving Time 
+                </label>
+                <div class="mt-2">
+                <input type="number" id="number-input" aria-describedby="helper-text-explanation" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-1" placeholder="ex.40" required />
+                </div>
+               </div>
+              </div>
+             <div className="col-span-full">
+              <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+               Ingredients
+              </label>
+              <div className="mt-2">
+                <textarea
+                  id="about"
+                  name="about"
+                  rows={3}
+                  className="p-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  defaultValue={''}
+                  placeholder="ingredient1, ingredient2, ingredient3, ..."
+                />
+              </div>
+            </div>
+             </form>
+              <div className="modal-action">
+                <form method="dialog">
+                  <button className="btn btn-primary mr-2">Submit</button>
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+        </span></td>
   </tr>
 );
 
@@ -51,12 +151,7 @@ export default function Productlist() {
         <thead>
           <tr>
             <th>
-                {/** 
-                 * <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-                 */}
-              
+                Disable
             </th>
             <th>Dish</th>
             <th>Ingredients</th>
@@ -71,7 +166,7 @@ export default function Productlist() {
         </tbody>
         <tfoot>
           <tr>
-            <th></th>
+            <th>Disable</th>
             <th>Dish</th>
             <th>Ingredients</th>
             <th>Category</th>
