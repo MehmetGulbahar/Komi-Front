@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-const CountdownTimer = ({ time, orderId }) => {
+const CountdownTimer = ({ time, orderId,orders,setOrders}) => {
   const initialTime = time * 60 * 1000;
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [isAccepted, setIsAccepted] = useState(false);
+  const token = localStorage.getItem("token");
+   const deleteOperation = (orderId) => {
+     const updatedOrders = orders.filter((order) => order.order.id !== orderId);
+     setOrders(updatedOrders);
+   };
 
   const handleAccept = (orderId) => {
     fetch(`http://localhost:8080/api/v1/order/ready?id=${orderId}`, {
@@ -18,7 +23,6 @@ const CountdownTimer = ({ time, orderId }) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        closeModal();
         setIsAccepted(true);
         deleteOperation(orderId);
       })
@@ -67,7 +71,9 @@ const CountdownTimer = ({ time, orderId }) => {
         max="100"
       ></progress>
       <button
-        onSubmit={handleAccept}
+        onClick={() => {
+          handleAccept(orderId);
+        }}
         href="#"
         className=" ml-4 mr-1 inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700"
       >

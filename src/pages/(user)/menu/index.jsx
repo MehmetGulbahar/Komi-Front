@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Acordeon from "./_components/Acordeon";
 import Check from "./_components/Check";
 import { v4 as uuidv4 } from "uuid";
@@ -6,6 +6,8 @@ import Checkout from "./_components/Checkout";
 import Orderstatus from "./_components/Orderstatus";
 export default function Index() {
   const [checkItems, setCheckItems] = useState([]);
+  const token = localStorage.getItem("token");
+  const [order,setOrders] = useState([]);
   const generateId = () => {
     return uuidv4();
   };
@@ -38,9 +40,34 @@ export default function Index() {
   const toggleOpen = () => {
     setOpen(!open);
   };
+
+ useEffect(() => {
+   fetch("http://localhost:8080/api/v1/order/view/userResponse", {
+     method: "GET",
+     credentials: "include",
+     headers: {
+       Authorization: `Bearer ${token}`,
+     },
+   })
+     .then((response) => {
+       if (!response.ok) {
+         throw new Error("Network response was not ok");
+       }
+       return response.json();
+     })
+     .then((data) => {
+       setOrders(data);
+     })
+     .catch((error) => {
+       console.error("Error fetching data:", error);
+     });
+ }, []);
+
+  
+
   return (
     <div>
-      <Orderstatus status = {3}/> {/** 1,2,3,4,5 diye parametre alarak sipariş statusu return ediyor bişey return etmemesi için 0 yazabilirsiniz */}
+      <Orderstatus status = {order[order.length-1]}/> 
       <div className="toast toast-end z-10">
         <div className="indicator">
           <span className="indicator-item badge badge-accent">

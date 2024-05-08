@@ -40,7 +40,6 @@ export default function Requestbutton({ plates, orderId }) {
         }
         closeModal();
         deleteOperation(orderId);
-        console.log("Basariyla silindi !");
       })
       .catch((error) => {
         console.error("Error accepting order:", error);
