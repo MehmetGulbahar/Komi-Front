@@ -33,6 +33,7 @@ const Reservation = () => {
     <div
       className="reservation-wrapper rounded-xl"
       style={{ backgroundColor: "#F7F7F7" }}
+      id="reservation"
     >
       <section id="book" className="relative z-30 pb-20 lg:py-[100px]">
         <div className="container mx-auto px-4 lg:px-0">
