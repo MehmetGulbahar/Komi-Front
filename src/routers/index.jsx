@@ -2,7 +2,6 @@ import {createBrowserRouter } from "react-router-dom";
 import UserLayout from "@/layouts/(user)";
 import Home from "@/pages/(user)/home";
 import Menu from "@/pages/(user)/menu";
-import Reservation from "@/pages/(user)/reservation";
 import Place from "@/pages/(user)/place";
 import Login from "@/pages/(user)/login";
 import Contact from "@/pages/(user)/contact";
@@ -40,10 +39,6 @@ const router = createBrowserRouter([
       {
         path: "menu",
         element: <Menu />,
-      },
-      {
-        path: "reservation",
-        element: <Reservation />,
       },
       {
         path: "place",
