@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/store/userSlice";
 
@@ -6,14 +6,13 @@ export default function Navbar() {
   const location = useLocation();
   const isMenuPage = location.pathname === "/menu";
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.value);
-
 
   const handleScroll = (id) => {
     const element = document.getElementById(id);
-    element.scrollIntoView({ behavior: 'smooth' });
+    element.scrollIntoView({ behavior: "smooth" });
   };
-
 
   const handleLogout = () => {
     fetch("http://localhost:8080/api/v1/auth/logout", {
@@ -80,23 +79,28 @@ export default function Navbar() {
             >
               <li className="mr-4">MENU</li>
             </NavLink>
-            {!isMenuPage && (
+
             <NavLink
-            onClick={(e) => {
-              e.preventDefault(); 
-              handleScroll('reservation');
-            }}
               to="/"
+              onClick={(e) => {
+                if (location.pathname === "/") {
+                  e.preventDefault();  
+                  handleScroll("reservation");
+                } else if (isMenuPage) {
+                  e.preventDefault();  
+                  navigate("/"); 
+                  setTimeout(() => handleScroll("reservation"), 0); 
+                }
+              }}
               className={({ isActive }) =>
                 `${
                   isActive ? "underline" : ""
-                } text-black hover:text-black  focus:outline-none`
-               
+                } text-black hover:text-black focus:outline-none`
               }
             >
               {" "}
               <li className="mr-4">RESERVATION</li>
-            </NavLink>)}
+            </NavLink>
             {/* <NavLink
               to="/place"
               className={({ isActive }) =>
@@ -144,22 +148,28 @@ export default function Navbar() {
           >
             <li className="mr-8">MENU</li>
           </NavLink>
-          {!isMenuPage && (
-            <NavLink
-              to="/"
-              onClick={(e) => {
+
+          <NavLink
+            to="/"
+            onClick={(e) => {
+              if (location.pathname === "/") {
                 e.preventDefault();
-                handleScroll('reservation');
-              }}
-              className={({ isActive }) =>
-                `${
-                  isActive ? "font-bold" : ""
-                } text-black hover:text-black focus:outline-none relative inline cursor-pointer text-xl font-medium before:bg-red-600 before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-75`
+                handleScroll("reservation");
+              } else if (isMenuPage) {
+                e.preventDefault(); 
+                navigate("/"); 
+                setTimeout(() => handleScroll("reservation"), 0); 
               }
-            >
-              <li className="mr-8">RESERVATION</li>
-            </NavLink>
-          )}
+            }}
+            className={({ isActive }) =>
+              `${
+                isActive ? "font-bold" : ""
+              } text-black hover:text-black focus:outline-none relative inline cursor-pointer text-xl font-medium before:bg-red-600 before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-75`
+            }
+          >
+            <li className="mr-8">RESERVATION</li>
+          </NavLink>
+
           {/* <NavLink
             to="/place"
             className={({ isActive }) =>
