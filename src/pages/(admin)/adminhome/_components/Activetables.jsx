@@ -67,7 +67,7 @@ export default function ActiveTables() {
                 </a>
               </td>
               <td>
-                <a className="link-error link-hover" href="" onClick="">
+                <a className="link-error link-hover" href="" onClick={()=> {}}>
                   End Session
                 </a>
               </td>

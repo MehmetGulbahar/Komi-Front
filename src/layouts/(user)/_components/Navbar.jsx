@@ -84,12 +84,12 @@ export default function Navbar() {
               to="/"
               onClick={(e) => {
                 if (location.pathname === "/") {
-                  e.preventDefault();  
+                  e.preventDefault();
                   handleScroll("reservation");
                 } else if (isMenuPage) {
-                  e.preventDefault();  
-                  navigate("/"); 
-                  setTimeout(() => handleScroll("reservation"), 0); 
+                  e.preventDefault();
+                  navigate("/");
+                  setTimeout(() => handleScroll("reservation"), 0);
                 }
               }}
               className={({ isActive }) =>
@@ -156,9 +156,9 @@ export default function Navbar() {
                 e.preventDefault();
                 handleScroll("reservation");
               } else if (isMenuPage) {
-                e.preventDefault(); 
-                navigate("/"); 
-                setTimeout(() => handleScroll("reservation"), 0); 
+                e.preventDefault();
+                navigate("/");
+                setTimeout(() => handleScroll("reservation"), 0);
               }
             }}
             className={({ isActive }) =>

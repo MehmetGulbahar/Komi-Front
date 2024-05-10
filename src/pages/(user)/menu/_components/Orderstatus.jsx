@@ -20,7 +20,7 @@ export default function OrderStatus({ status }) {
       cancelBtrue = cancelB;
       break;
     case 2:
-      className += "alert-success";
+      className += " alert-success";
       icon = <span className="loading loading-spinner loading-xs"></span>;
       text = "Your order was accepted by the Chef.";
       cancelBtrue = cancelB;

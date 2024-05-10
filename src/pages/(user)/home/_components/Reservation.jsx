@@ -11,7 +11,8 @@ import 'react-clock/dist/Clock.css';
 const Reservation = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = useState("10:00");
-   const [time, setTime] = useState("12:00"); 
+  const [time, setTime] = useState("12:00"); 
+  const [guest, setGuest] = useState("");
   const pasifico = {
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -110,18 +111,27 @@ const Reservation = () => {
               <div className="flex items-center gap-x-2 font-semibold text-dark text-base mb-3">
                 <FaUsers />
               </div>
-              <input className="input" type="text" placeholder="1" />
+              <input
+                className="input"
+                type="text"
+                placeholder="1"
+                onChange={(e) => setGuest(e.target.value)}
+              />
             </div>
             <div className="flex flex-col lg:flex-row gap-4 items-center">
               <a
-                href="https://websitecost.today/"
                 target="_blank"
                 className="group relative overflow-hidden focus:ring-4 focus:ring-blue-300 inline-flex items-center px-7 py-2.5 rounded-lg text-white justify-center"
                 style={{ backgroundColor: "#76ABAE" }}
               >
-                <span className="z-40" style={{ backgroundColor: "1B1A55" }}>
+                <button
+                  className="z-40"
+                  style={{ backgroundColor: "1B1A55" }}
+                  onClick={console.log(startDate + " " + time + " " + guest)}
+                >
                   Make a Reservation
-                </span>
+                </button>
+
                 <svg
                   className="z-40 ml-2 -mr-1 w-3 h-3 transition-all duration-300 group-hover:translate-x-1"
                   fill="currentColor"
