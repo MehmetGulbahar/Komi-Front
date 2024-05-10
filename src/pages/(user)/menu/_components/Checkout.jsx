@@ -147,7 +147,7 @@ export default function Checkout({
                                 cost={item.cost * item.quantity}
                                 deleteOperation={deleteOperation}
                                 note={item.note}
-                                imageUrl={item.imageUrl}
+                                imageLink={item.imageLink}
                                 quantity={item.quantity}
                                 checkItems={checkItems}
                                 setCheckItems={setCheckItems}

@@ -4,9 +4,11 @@ import Timer from "./Timer";
 export default function Todo() {
   const token = localStorage.getItem("token");
   const [orders, setOrders] = useState([]);
- 
 
+
+  
    
+
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/order/viewAll/cook_accept", {
       method: "POST",
@@ -19,10 +21,10 @@ export default function Todo() {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        
+
         return response.json();
       })
-      .then((data) => {     
+      .then((data) => {
         setOrders(data);
       })
 
@@ -30,6 +32,7 @@ export default function Todo() {
         console.error("Error fetching data:", error);
       });
   }, []);
+
 
   return (
     <div className="grid h-full flex-grow bg-base-300 place-items-center">
@@ -62,7 +65,12 @@ export default function Todo() {
                 Quantity
               </td>
               <td className="whitespace-nowrap px-4 py-2">
-                <Timer orderId={order.order.id} orders={orders} setOrders={setOrders} time={5} />
+                <Timer
+                  orderId={order.order.id}
+                  orders={orders}
+                  setOrders={setOrders}
+                  time={order.plates.map((plate) => plate.preparationTime)}
+                />
               </td>
               <td className="whitespace-nowrap px-4 py-2"></td>
             </tr>

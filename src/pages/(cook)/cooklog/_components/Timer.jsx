@@ -10,7 +10,7 @@ const CountdownTimer = ({ time, orderId,orders,setOrders}) => {
      const updatedOrders = orders.filter((order) => order.order.id !== orderId);
      setOrders(updatedOrders);
    };
-
+ 
   const handleAccept = (orderId) => {
     fetch(`http://localhost:8080/api/v1/order/ready?id=${orderId}`, {
       method: "POST",

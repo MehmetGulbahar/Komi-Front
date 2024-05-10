@@ -77,7 +77,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           {filterFoodsByCourse("APPETIZER").map((food, index) => (
             <Card
               key={index}
-              imageUrl={food.imageLink.link}
+              imageUrl={food.imageLink}
               title={food.name}
               preparationTime={food.preparationTime}
               description={food.description}
@@ -127,7 +127,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           {filterFoodsByCourse("MAIN").map((food, index) => (
             <Card
               key={index}
-              imageUrl={food.imageLink.link}
+              imageUrl={food.imageLink}
               title={food.name}
               description={food.description}
               cost={food.price}
@@ -142,7 +142,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
                   food.name,
                   food.description,
                   food.price,
-                  food.imageLink.link,
+                  food.imageLink,
                   note
                 );
                 setCheckItems((prevItems) => [
@@ -151,7 +151,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
-                    imageUrl: food.imageLink.link,
+                    imageUrl: food.imageLink,
                     note: note,
                   },
                 ]);
@@ -176,7 +176,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           {filterFoodsByCourse("DESSERT").map((food, index) => (
             <Card
               key={index}
-              imageUrl={food.imageLink.link}
+              imageUrl={food.imageLink}
               title={food.name}
               description={food.description}
               cost={food.price}
@@ -191,7 +191,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
                   food.name,
                   food.description,
                   food.price,
-                  food.imageLink.link,
+                  food.imageLink,
                   note
                 );
                 setCheckItems((prevItems) => [
@@ -200,7 +200,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
-                    imageUrl: food.imageLink.link,
+                    imageUrl: food.imageLink,
                     note: note,
                   },
                 ]);
