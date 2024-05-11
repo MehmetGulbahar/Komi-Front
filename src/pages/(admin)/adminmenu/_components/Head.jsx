@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { useState } from "react";
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -9,11 +9,53 @@ import {
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 export default function Head() {
+  const token = localStorage.getItem("token");
+
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    preparationTime: "",
+    course: "",
+    price: 0,
+  });
+
+  const saveFood = (e) => {
+    e.preventDefault();
+
+    fetch(`http://localhost:8080/api/v1/food/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify([formData]),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+      })
+      .then((data) => {
+        //Modal eklenecek response okey ise
+      })
+      .catch((error) => {
+        console.error("Response:", error.response);
+      });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    let newValue = value;
+    if (name === "price") {
+      newValue = parseInt(value);
+    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: newValue,
+    }));
+  };
+
   return (
     <div className="lg:flex lg:items-center lg:justify-between">
       <div className="min-w-0 flex p-5 m-2">
@@ -22,13 +64,11 @@ export default function Head() {
         </h2>
       </div>
       <div className="mt-5 flex lg:ml-4 lg:mt-0">
-       
-
         <span className="sm:ml-3">
           <button
             type="button"
             className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={()=>document.getElementById('AddForm').showModal()}
+            onClick={() => document.getElementById("AddForm").show()}
           >
             <PlusIcon
               className="-ml-0.5 mr-1.5 h-5 w-5 text-white"
@@ -36,137 +76,122 @@ export default function Head() {
             />
             Add
           </button>
-          <dialog
-            id="AddForm"
-            className="modal modal-bottom sm:modal-middle"
-          >
+          <dialog id="AddForm" className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
               <h3 className="font-bold text-lg">Add Dish</h3>
-             <form action="">
-             <div className="sm:col-span-4">
-              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                Dish Name
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    autoComplete="username"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="Dish Name"
-                  />
-                </div>
-              </div></div>
-              <div className="w-full">
-              <div className="">
-                <label
-                  htmlFor="category"
-                  className="block text-xs font-medium leading-6 text-gray-900"
-                >
-                  Category
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="category"
-                    name="category"
-          
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              <form onSubmit={saveFood}>
+                <div className="sm:col-span-4">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
-                    <option >Starter</option>
-                    <option >Main Course</option>
-                    <option >Dessert</option>
-                  </select>
+                    Dish Name
+                  </label>
+                  <div className="mt-2">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                      <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        placeholder="Dish Name"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-               <div className="w-36">
-               <label
-                  for="first-name"
-                  className="block  font-medium leading-6 text-gray-900 text-sm"
-                >
-                  Serving Time 
-                </label>
-                <div class="mt-2">
-                <input type="number" id="number-input" aria-describedby="helper-text-explanation" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-1" placeholder="ex.40" required />
+                <div className="w-full">
+                  <div className="">
+                    <label
+                      htmlFor="category"
+                      className="block text-xs font-medium leading-6 text-gray-900"
+                    >
+                      Category
+                    </label>
+                    <div className="mt-2">
+                      <select
+                        id="category"
+                        name="course"
+                        value={formData.course}
+                        onChange={handleInputChange}
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      >
+                        <option value="APPETIZER">Starter</option>
+                        <option value="MAIN">Main Course</option>
+                        <option value="DESSERT">Dessert</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    Serving Time
+                    <select
+                      id="preparationTime"
+                      name="preparationTime"
+                      value={formData.servingTime}
+                      onChange={handleInputChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                      <option value="QUICK">Quick 10</option>
+                      <option value="FAST">Fast 20</option>
+                      <option value="MODERATE">Moderate 30</option>
+                      <option value="SLOW">Slow 60</option>
+                      <option value="VERY_SLOW">Very Slow 120</option>
+                      <option value="EXTREMELY_SLOW">Extremely Slow 300</option>
+                    </select>
+                  </div>
+                  <div className="mt-2">
+                    <label
+                      htmlFor="price"
+                      className="block text-xs font-medium leading-6 text-gray-900"
+                    >
+                      Price
+                    </label>
+                    <input
+                      type="number"
+                      name="price"
+                      value={formData.price}
+                      onChange={handleInputChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      placeholder="Price"
+                    />
+                  </div>
                 </div>
-               </div>
-              </div>
-             <div className="col-span-full">
-              <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-               Ingredients
-              </label>
-              <div className="mt-2">
-                <textarea
-                  id="about"
-                  name="about"
-                  rows={3}
-                  className="p-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  defaultValue={''}
-                  placeholder="ingredient1, ingredient2, ingredient3, ..."
-                />
-              </div>
-            </div>
-             </form>
-              <div className="modal-action">
-                <form method="dialog">
-                  <button className="btn btn-primary mr-2">Submit</button>
-                  <button className="btn">Close</button>
-                </form>
-              </div>
+                <div className="col-span-full">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Description
+                  </label>
+                  <div className="mt-2">
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows={3}
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      className="p-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder="Description"
+                    />
+                  </div>
+                </div>
+                <div className="modal-action">
+                  <button
+                    type="submit"
+                    className="btn btn-primary mr-2"
+                    onClick={saveFood}
+                  >
+                    Submit
+                  </button>
+                  <button type="button" className="btn">
+                    Close
+                  </button>
+                </div>
+              </form>
             </div>
           </dialog>
         </span>
-
-        {/* Dropdown */}
-        <Menu as="div" className="relative ml-3 sm:hidden">
-          <Menu.Button className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400">
-            More
-            <ChevronDownIcon
-              className="-mr-1 ml-1.5 h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
-          </Menu.Button>
-
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-200"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
-          >
-            <Menu.Items className="absolute right-0 z-10 -mr-1 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <Menu.Item>
-                {({ active }) => (
-                  <a
-                    href="#"
-                    className={classNames(
-                      active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
-                    )}
-                  >
-                    Edit
-                  </a>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <a
-                    href="#"
-                    className={classNames(
-                      active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
-                    )}
-                  >
-                    View
-                  </a>
-                )}
-              </Menu.Item>
-            </Menu.Items>
-          </Transition>
-        </Menu>
       </div>
     </div>
   );

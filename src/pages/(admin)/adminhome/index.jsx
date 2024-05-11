@@ -9,7 +9,9 @@ import { NavLink } from "react-router-dom";
 import AuthCheck from "../../../layouts/(user)/_components/AuthCheck";
 export default function index() {
   const user = useSelector((state) => state.user.value);
-const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+
+ 
 
   return user?.role === "ADMIN" || !user ? (
     <>
