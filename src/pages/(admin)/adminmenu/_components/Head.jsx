@@ -11,6 +11,7 @@ import { Menu, Transition } from "@headlessui/react";
 
 export default function Head() {
   const token = localStorage.getItem("token");
+  const [isFoodSaved, setIsFoodSaved] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,6 +20,7 @@ export default function Head() {
     course: "",
     price: 0,
   });
+
 
   const saveFood = (e) => {
     e.preventDefault();
@@ -37,7 +39,8 @@ export default function Head() {
         }
       })
       .then((data) => {
-        //Modal eklenecek response okey ise
+         document.getElementById("my_modal_5").showModal();
+          setModalIsOpen(true);
       })
       .catch((error) => {
         console.error("Response:", error.response);
@@ -55,6 +58,10 @@ export default function Head() {
       [name]: newValue,
     }));
   };
+    const closeModal = () => {
+      document.getElementById("my_modal_5").close();
+      setIsFoodSaved(false);
+    };
 
   return (
     <div className="lg:flex lg:items-center lg:justify-between">
@@ -184,7 +191,11 @@ export default function Head() {
                   >
                     Submit
                   </button>
-                  <button type="button" className="btn">
+                  <button
+                    type="button"
+                    className="btn"
+                    onClick={() => document.getElementById("AddForm").close()}
+                  >
                     Close
                   </button>
                 </div>
@@ -193,6 +204,25 @@ export default function Head() {
           </dialog>
         </span>
       </div>
+      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">
+            {isFoodSaved ? "Food saved successfully" : "Success!"}
+          </h3>
+          <p className="py-4">
+            {isFoodSaved
+              ? "Please check your email."
+              : "Food saved successfully"}
+          </p>
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn" onClick={closeModal}>
+                Close
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 }
