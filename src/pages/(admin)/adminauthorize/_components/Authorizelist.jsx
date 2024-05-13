@@ -47,7 +47,7 @@ export default function AuthorizeList() {
 
   const handleAccept = (userId, newRole) => {
     fetch(`http://localhost:8080/api/v1/users/authority`, {
-      method: "PATCH",
+      method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
