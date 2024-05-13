@@ -87,7 +87,7 @@ export default function Head() {
             <div className="modal-box">
               <h3 className="font-bold text-lg">Add Dish</h3>
               <form onSubmit={saveFood}>
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-4 mt-5">
                   <label
                     htmlFor="name"
                     className="block text-sm font-medium leading-6 text-gray-900"
@@ -109,10 +109,10 @@ export default function Head() {
                   </div>
                 </div>
                 <div className="w-full">
-                  <div className="">
+                  <div className="mt-2">
                     <label
                       htmlFor="category"
-                      className="block text-xs font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Category
                     </label>
@@ -122,7 +122,7 @@ export default function Head() {
                         name="course"
                         value={formData.course}
                         onChange={handleInputChange}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        className="block w-full block text-sm font-medium leading-6 text-gray-900 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                       >
                         <option value="APPETIZER">Starter</option>
                         <option value="MAIN">Main Course</option>
@@ -130,7 +130,7 @@ export default function Head() {
                       </select>
                     </div>
                   </div>
-                  <div className="mt-2">
+                  <div className="mt-2 block text-sm font-medium leading-6 text-gray-900">
                     Serving Time
                     <select
                       id="preparationTime"
@@ -150,7 +150,7 @@ export default function Head() {
                   <div className="mt-2">
                     <label
                       htmlFor="price"
-                      className="block text-xs font-medium leading-6 text-gray-900"
+                      className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Price
                     </label>
@@ -164,7 +164,7 @@ export default function Head() {
                     />
                   </div>
                 </div>
-                <div className="col-span-full">
+                <div className="col-span-full mt-3">
                   <label
                     htmlFor="description"
                     className="block text-sm font-medium leading-6 text-gray-900"
@@ -180,6 +180,18 @@ export default function Head() {
                       onChange={handleInputChange}
                       className="p-1 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="Description"
+                    />
+                  </div>
+                  <div className="col-span-full mt-5">
+                    <label
+                      htmlFor="description"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Image Upload
+                    </label>
+                    <input
+                      type="file"
+                      className="file-input file-input-primary mt-4 file-input-bordered file-input-sm w-full max-w-xs"
                     />
                   </div>
                 </div>

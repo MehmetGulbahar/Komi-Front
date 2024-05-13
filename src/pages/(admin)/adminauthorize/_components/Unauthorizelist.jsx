@@ -21,7 +21,6 @@ useEffect(() => {
     })
     .then((users) => {
       setUsers(users);
-      console.log(users);
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
