@@ -139,6 +139,10 @@ export default function Checkout({
                             className="-my-6 divide-y divide-gray-200"
                           >
                             {checkItems.map((item, index) => (
+                            console.log(item.imageUrl)
+                          ))}
+                            {checkItems.map((item, index) => (
+                               
                               <Ckitems
                                 key={index}
                                 id={item.id}
@@ -147,11 +151,12 @@ export default function Checkout({
                                 cost={item.cost * item.quantity}
                                 deleteOperation={deleteOperation}
                                 note={item.note}
-                                imageLink={item.imageLink}
+                                imageLink={item.imageUrl}
                                 quantity={item.quantity}
                                 checkItems={checkItems}
                                 setCheckItems={setCheckItems}
                               />
+                            
                             ))}
                           </ul>
                         </div>

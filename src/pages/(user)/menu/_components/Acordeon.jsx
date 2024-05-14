@@ -74,6 +74,10 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           role="tabpanel"
           className="tab-content  p-6"
         >
+          <div className="flex items-center justify-center w-full">
+          <div className="bg-white">
+          <div className="mx-auto max-w-2xl px-2 py-2 sm:px-4 sm:py-6 lg:max-w-7xl lg:px-8">
+          <div className="mt-0 w-full grid  gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
           {filterFoodsByCourse("APPETIZER").map((food, index) => (
             <Card
               key={index}
@@ -93,7 +97,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
                   food.name,
                   food.description,
                   food.price,
-                  food.imageLink.link,
+                  food.imageLink,
                   note
                 );
                 setCheckItems((prevItems) => [
@@ -102,13 +106,20 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
                     name: food.name,
                     detail: food.description,
                     cost: food.price,
-                    imageUrl: food.imageLink.link,
+                    imageUrl: food.imageLink,
                     note: note,
                   },
                 ]);
               }}
             />
           ))}
+         
+          </div>
+          </div>
+        </div>
+      </div>
+      
+          
         </div>
 
         <input
@@ -124,6 +135,10 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           role="tabpanel"
           className="tab-content  p-6"
         >
+          <div className="flex items-center justify-center w-full">
+          <div className="bg-white">
+          <div className="mx-auto max-w-2xl px-2 py-2 sm:px-4 sm:py-6 lg:max-w-7xl lg:px-8">
+          <div className="mt-0 w-full grid  gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
           {filterFoodsByCourse("MAIN").map((food, index) => (
             <Card
               key={index}
@@ -158,6 +173,10 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               }}
             />
           ))}
+          </div>
+        </div>
+        </div>
+        </div>
         </div>
 
         <input
@@ -173,6 +192,10 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
           role="tabpanel"
           className="tab-content p-6"
         >
+          <div className="flex items-center justify-center w-full">
+          <div className="bg-white">
+          <div className="mx-auto max-w-2xl px-2 py-2 sm:px-4 sm:py-6 lg:max-w-7xl lg:px-8">
+          <div className="mt-0 w-full grid  gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8 ">
           {filterFoodsByCourse("DESSERT").map((food, index) => (
             <Card
               key={index}
@@ -207,6 +230,10 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
               }}
             />
           ))}
+        </div>
+        </div>
+        </div>
+        </div>
         </div>
       </div>
     </div>
