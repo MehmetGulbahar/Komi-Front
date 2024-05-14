@@ -34,7 +34,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="navbar bg-base-200 rounded-b-2xl border-b-4 border-black ">
+    <div className="navbar bg-base-200 border-b  border-slate-400 ">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -114,9 +114,9 @@ export default function Navbar() {
           </ul>
         </div>
         <NavLink to="/">
-          <button className="btn btn-ghost text-xl">
+          <button className="hover:opacity-80">
             <img
-              src="/src/assets/logo/logo.svg"
+              src="/src/assets/logo/komilogo.png"
               className="text-red-500"
               alt=""
               width={100}
