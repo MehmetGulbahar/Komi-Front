@@ -12,7 +12,6 @@ import { Menu, Transition } from "@headlessui/react";
 export default function Head() {
   const token = localStorage.getItem("token");
   const [isFoodSaved, setIsFoodSaved] = useState(false);
-
   const [formData, setFormData] = useState({
     name: "",
     description: "",

@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "./variants";
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
+import { format } from "date-fns";
+
 
 const Reservation = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -28,6 +30,9 @@ const Reservation = () => {
     subtitle2: "Reservations required for parties of 6 or more.",
     modelImg: "ModelBlackImg",
     btnText: "Make a Reservation",
+  };
+  const formatDate = (date) => {
+    return format(date, "dd-MM-yyyy");
   };
 
   return (
@@ -86,6 +91,7 @@ const Reservation = () => {
                 className="input"
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
+                placeholderText={formatDate(startDate)}
               />
             </div>
             <div className="flex flex-col lg:flex-row gap-4 items-center">
