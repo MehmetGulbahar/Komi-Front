@@ -21,6 +21,7 @@ const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
   const elapsedTime = currentTime - orderDateTime;
   const [timeLeft, setTimeLeft] = useState(initialTime - elapsedTime);
   const [isAccepted, setIsAccepted] = useState(false);
+  const [started, setStarted] = useState(false); // Yeni state: zamanlayıcı başladı mı?
 
   const deleteOperation = useCallback(
     (orderId) => {
@@ -62,14 +63,14 @@ const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
   }, [timeLeft, isAccepted, handleAccept, orderId]);
 
   useEffect(() => {
-    const timer =
-      timeLeft > 0 &&
-      setInterval(() => {
+    if (started && timeLeft > 0) {
+      const timer = setInterval(() => {
         setTimeLeft((prevTimeLeft) => prevTimeLeft - 1000);
       }, 1000);
 
-    return () => clearInterval(timer);
-  }, [timeLeft]);
+      return () => clearInterval(timer);
+    }
+  }, [timeLeft, started]);
 
   const calculateProgress = () => {
     const progressValue = ((initialTime - timeLeft) / initialTime) * 100;
@@ -103,6 +104,19 @@ const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
     return longestTime;
   };
 
+  useEffect(() => {
+    const longestTime = getLongestTimeForOrderId(orderId) * 60 * 1000;
+    if (time === longestTime / (60 * 1000)) {
+      setStarted(true);
+    } else {
+      const timer = setTimeout(() => {
+        setStarted(true);
+      }, longestTime - initialTime);
+
+      return () => clearTimeout(timer);
+    }
+  }, [time, orderId, initialTime, orders]);
+
   return (
     <div className="w-full flex items-center">
       <h4 className="font-bold">{formatTimeLeft()}</h4>
@@ -122,7 +136,5 @@ const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
     </div>
   );
 };
-
-
 
 export default Timer;

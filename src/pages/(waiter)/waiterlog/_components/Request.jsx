@@ -31,7 +31,7 @@ const Request = () => {
   useEffect(() => {
     const socket = io("http://localhost:8877");
     socket.on("record_updated", (data) => {
-      console.log("Socket", data);
+      console.log(data);
       setOrders(data);
     });
 
