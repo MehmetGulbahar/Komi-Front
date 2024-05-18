@@ -9,7 +9,7 @@ export default function Todo() {
   useEffect(() => {
     const socket = io("http://localhost:8877");
 
-    socket.on("cook_updated", (updatedOrderArray) => {
+    socket.on("food_updated", (updatedOrderArray) => {
       console.log("Order updated", updatedOrderArray);
       const updatedOrders = Array.isArray(updatedOrderArray)
         ? updatedOrderArray
