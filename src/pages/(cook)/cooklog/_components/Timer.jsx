@@ -1,36 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 
-const CountdownTimer = ({ time, orderId,orders,setOrders}) => {
-  const initialTime = time * 60 * 1000;
-  const [timeLeft, setTimeLeft] = useState(initialTime);
+const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
+  if (!orderTime) {
+    console.error("orderTime prop is required but was not provided.");
+    return null;
+  }
+
+  const orderTimeOnly = orderTime.slice(0, 5); // 'HH:MM' formatında
+  const initialTime = time * 60 * 1000; // Dakikaları milisaniyeye çevir
+
+  const currentDate = new Date();
+  const currentTime = currentDate.getTime();
+
+  const [orderHour, orderMinute] = orderTimeOnly.split(":").map(Number);
+  const orderDate = new Date(currentDate);
+  orderDate.setHours(orderHour, orderMinute, 0, 0);
+  const orderDateTime = orderDate.getTime();
+
+  const elapsedTime = currentTime - orderDateTime;
+  const [timeLeft, setTimeLeft] = useState(initialTime - elapsedTime);
   const [isAccepted, setIsAccepted] = useState(false);
-  const token = localStorage.getItem("token");
-   const deleteOperation = (orderId) => {
-     const updatedOrders = orders.filter((order) => order.order.id !== orderId);
-     setOrders(updatedOrders);
-   };
- 
-  const handleAccept = (orderId) => {
-    fetch(`http://localhost:8080/api/v1/order/ready?id=${orderId}`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        setIsAccepted(true);
-        deleteOperation(orderId);
+
+  const deleteOperation = useCallback(
+    (orderId) => {
+      const updatedOrders = orders.filter(
+        (order) => order.order.id !== orderId
+      );
+      setOrders(updatedOrders);
+    },
+    [orders, setOrders]
+  );
+
+  const handleAccept = useCallback(
+    (orderId) => {
+      fetch(`http://localhost:8080/api/v1/order/ready?id=${orderId}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       })
-      .catch((error) => {
-        console.error("Error accepting order:", error);
-      });
-  };
-  
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          setIsAccepted(true);
+          deleteOperation(orderId);
+        })
+        .catch((error) => {
+          console.error("Error accepting order:", error);
+        });
+    },
+    [deleteOperation]
+  );
+
+  useEffect(() => {
+    if (timeLeft <= 0 && !isAccepted) {
+      handleAccept(orderId);
+    }
+  }, [timeLeft, isAccepted, handleAccept, orderId]);
+
   useEffect(() => {
     const timer =
       timeLeft > 0 &&
@@ -42,7 +72,8 @@ const CountdownTimer = ({ time, orderId,orders,setOrders}) => {
   }, [timeLeft]);
 
   const calculateProgress = () => {
-    return ((initialTime - timeLeft) / initialTime) * 100;
+    const progressValue = ((initialTime - timeLeft) / initialTime) * 100;
+    return isNaN(progressValue) ? 0 : progressValue;
   };
 
   const formatTimeLeft = () => {
@@ -61,7 +92,17 @@ const CountdownTimer = ({ time, orderId,orders,setOrders}) => {
   } else {
     className = "progress-error";
   }
-  
+
+  const getLongestTimeForOrderId = (orderId) => {
+    const orderPlates = orders.find(
+      (order) => order.order.id === orderId
+    ).plates;
+    const longestTime = Math.max(
+      ...orderPlates.map((plate) => plate.preparationTime)
+    );
+    return longestTime;
+  };
+
   return (
     <div className="w-full flex items-center">
       <h4 className="font-bold">{formatTimeLeft()}</h4>
@@ -74,16 +115,14 @@ const CountdownTimer = ({ time, orderId,orders,setOrders}) => {
         onClick={() => {
           handleAccept(orderId);
         }}
-        href="#"
-        className=" ml-4 mr-1 inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700"
+        className="ml-4 mr-1 inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700"
       >
         Ready!
       </button>
     </div>
   );
 };
-CountdownTimer.propTypes = {
-  time: PropTypes.number.isRequired,
-};
 
-export default CountdownTimer;
+
+
+export default Timer;

@@ -6,32 +6,65 @@ const Request = () => {
   const [orders, setOrders] = useState([]);
   const token = localStorage.getItem("token");
 
+  useEffect(() => {
+    const socket = io("http://localhost:8877");
+    socket.on("order_updated", (updatedOrder) => {
+      setOrders((prevOrders) => {
+        return prevOrders.map((orderx) => {
+          if (orderx.order.id === updatedOrder.orderId) {
+            return {
+              ...orderx,
+              order: {
+                ...orderx.order,
+                orderStatus: updatedOrder.orderStatus,
+              },
+            };
+          }
+          return orderx;
+        });
+      });
+    });
 
- useEffect(() => {
-   fetch("http://localhost:8080/api/v1/order/viewAll", {
-     method: "POST",
-     credentials: "include",
-     headers: {
-       Authorization: `Bearer ${token}`,
-     },
-   })
-     .then((response) => {
-       if (!response.ok) {
-         throw new Error("Network response was not ok");
-       }
-       return response.json();
-     })
-     .then((data) => {
-       setOrders(data);
-     })
-     .catch((error) => {
-       console.error("Error fetching data:", error);
-     });
- }, []);
+    return () => socket.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const socket = io("http://localhost:8877");
+    socket.on("record_updated", (data) => {
+      console.log("Socket", data);
+      setOrders(data);
+    });
+
+    return () => socket.disconnect();
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/v1/order/viewAll", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fetch ", data);
+        setOrders(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [token]);
+
   return (
-    <div className="h-full">
-      <div className="overflow-x-auto">
-        <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden min-h-screen h-full">
+    <div className="h-full ">
+      <div className="overflow-x-auto ">
+        <div className="inline-block min-w-full  shadow-md rounded-lg overflow-hidden min-h-screen h-full">
           <table className="min-w-full leading-normal">
             <thead>
               <tr>
@@ -51,7 +84,7 @@ const Request = () => {
               {orders.map((order) => (
                 <tr key={order.order.id} className="border-b border-gray-200">
                   <td className="px-5 py-5 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">
+                    <p className="text-gray-900 ml-4 whitespace-no-wrap">
                       {order.order.masaId}
                     </p>
                   </td>

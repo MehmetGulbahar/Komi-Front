@@ -224,7 +224,9 @@ export default function Navbar() {
         ) : (
           <NavLink
             to="/login"
-            className={"btn-dark ext-black hover:text-black focus:outline-none"}
+            className={
+              "text-black hover:text-black focus:outline-none relative inline cursor-pointer text-xl font-medium before:absolute before:-bottom-1 before:block before:h-[3px] before:w-full before:origin-bottom-right before:scale-x-0 before:transition before:duration-300 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-75"
+            }
           >
             Login
           </NavLink>

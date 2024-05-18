@@ -139,9 +139,6 @@ export default function Checkout({
                             className="-my-6 divide-y divide-gray-200"
                           >
                             {checkItems.map((item, index) => (
-                            console.log(item.imageUrl)
-                          ))}
-                            {checkItems.map((item, index) => (
                                
                               <Ckitems
                                 key={index}

@@ -1,13 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Timer from "./Timer";
+import io from "socket.io-client";
 
 export default function Todo() {
   const token = localStorage.getItem("token");
   const [orders, setOrders] = useState([]);
 
+  useEffect(() => {
+    const socket = io("http://localhost:8877");
 
-  
-   
+    socket.on("cook_updated", (updatedOrderArray) => {
+      console.log("Order updated", updatedOrderArray);
+      const updatedOrders = Array.isArray(updatedOrderArray)
+        ? updatedOrderArray
+        : [updatedOrderArray];
+
+      setOrders((prevOrders) => {
+        const updatedOrdersMap = new Map(
+          prevOrders.map((order) => [order.order.id, order])
+        );
+        updatedOrders.forEach((updatedOrder) => {
+          updatedOrdersMap.set(updatedOrder.order.id, updatedOrder);
+        });
+        return Array.from(updatedOrdersMap.values());
+      });
+    });
+
+    return () => socket.disconnect();
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/order/viewAll/cook_accept", {
@@ -21,23 +41,21 @@ export default function Todo() {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
         return response.json();
       })
       .then((data) => {
         setOrders(data);
+        console.log(data);
       })
-
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
-
+  }, [token]);
 
   return (
     <div className="grid h-full flex-grow bg-base-300 place-items-center">
       <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-        <thead className="ltr:text-left rtl:text-right">
+        <thead className="">
           <tr>
             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
               Order Id
@@ -45,35 +63,38 @@ export default function Todo() {
             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
               Dish
             </th>
-            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-              Quantity
+            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-left">
+              Time
             </th>
             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900"></th>
             <th className="px-4 py-2"></th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 text-center">
           {orders.map((order) => (
-            <tr key={order.order.id}>
-              <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                {order.order.id}
-              </td>
-              <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                {order.plates.map((plate) => plate.food).join(", ")}
-              </td>
-              <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                Quantity
-              </td>
-              <td className="whitespace-nowrap px-4 py-2">
-                <Timer
-                  orderId={order.order.id}
-                  orders={orders}
-                  setOrders={setOrders}
-                  time={order.plates.map((plate) => plate.preparationTime)}
-                />
-              </td>
-              <td className="whitespace-nowrap px-4 py-2"></td>
-            </tr>
+            <React.Fragment key={order.order.id}>
+              {order.plates.map((plate) => (
+                <tr key={plate.id}>
+                  <td className="whitespace-nowrap px-4 py-2 text-black">
+                    {order.order.id}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                    {plate.food}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2">
+                  
+                    <Timer
+                      orderId={order.order.id}
+                      orders={orders}
+                      setOrders={setOrders}
+                      time={plate.preparationTime}
+                      orderTime={order.order.localTime}
+                    />
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2"></td>
+                </tr>
+              ))}
+            </React.Fragment>
           ))}
         </tbody>
       </table>

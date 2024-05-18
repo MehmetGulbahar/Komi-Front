@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import io from "socket.io-client";
 
 export default function Orders() {
   const token = localStorage.getItem("token");
@@ -8,6 +9,29 @@ export default function Orders() {
   const closeModal = () => {
     setIsAccepted(false);
   };
+
+  useEffect(() => {
+    const socket = io("http://localhost:8877");
+
+    socket.on("cook_updated", (updatedOrderArray) => {
+      console.log("Order updated", updatedOrderArray);
+      const updatedOrders = Array.isArray(updatedOrderArray)
+        ? updatedOrderArray
+        : [updatedOrderArray];
+
+      setOrders((prevOrders) => {
+        const updatedOrdersMap = new Map(
+          prevOrders.map((order) => [order.order.id, order])
+        );
+        updatedOrders.forEach((updatedOrder) => {
+          updatedOrdersMap.set(updatedOrder.order.id, updatedOrder);
+        });
+        return Array.from(updatedOrdersMap.values());
+      });
+    });
+
+    return () => socket.disconnect();
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/order/viewAll/cook", {
@@ -82,11 +106,11 @@ export default function Orders() {
     setOrders(updatedOrders);
   };
 
-
   return (
     <div className="grid h-20 flex-grow bg-base-300 place-items-center">
+      Ordersjsx
       <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-        <thead className="ltr:text-left rtl:text-right">
+        <thead className="">
           <tr>
             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
               Order Id
@@ -101,7 +125,7 @@ export default function Orders() {
             <th className="px-4 py-2"></th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 text-center">
           {orders.map((order) => (
             <tr key={order.order.id}>
               <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">

@@ -18,12 +18,12 @@ export default function Head() {
     preparationTime: "",
     course: "",
     price: 0,
+    imageLink: "",
+    imageName: "",
   });
-
 
   const saveFood = (e) => {
     e.preventDefault();
-
     fetch(`http://localhost:8080/api/v1/food/add`, {
       method: "POST",
       headers: {
@@ -31,18 +31,49 @@ export default function Head() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify([formData]),
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      document.getElementById("my_modal_5").showModal();
+      setIsFoodSaved(true);
+    });
+  };
+
+  const uploadImage = (e) => {
+    e.preventDefault();
+
+    const imageData = new FormData();
+    imageData.append("file", e.target.files[0]);
+
+    fetch("http://localhost:8080/api/firebase/uploadFiles", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: imageData,
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        return response.text();
       })
       .then((data) => {
-         document.getElementById("my_modal_5").showModal();
-          setModalIsOpen(true);
+        console.log("File uploaded successfully:", data);
+        alert("File uploaded successfully");
+
+        const fileName = e.target.files[0].name;
+
+        setFormData((prevData) => ({
+          ...prevData,
+          imageLink: data,
+          imageName: fileName,
+        }));
       })
       .catch((error) => {
-        console.error("Response:", error.response);
+        console.error("Error uploading file:", error);
+        alert("Error uploading file: " + error.message);
       });
   };
 
@@ -57,10 +88,11 @@ export default function Head() {
       [name]: newValue,
     }));
   };
-    const closeModal = () => {
-      document.getElementById("my_modal_5").close();
-      setIsFoodSaved(false);
-    };
+
+  const closeModal = () => {
+    document.getElementById("my_modal_5").close();
+    setIsFoodSaved(false);
+  };
 
   return (
     <div className="lg:flex lg:items-center lg:justify-between">
@@ -134,7 +166,7 @@ export default function Head() {
                     <select
                       id="preparationTime"
                       name="preparationTime"
-                      value={formData.servingTime}
+                      value={formData.preparationTime}
                       onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
@@ -181,34 +213,37 @@ export default function Head() {
                       placeholder="Description"
                     />
                   </div>
-                  <div className="col-span-full mt-5">
+                  <div className="mt-2">
                     <label
-                      htmlFor="description"
+                      htmlFor="fileUpload"
                       className="block text-sm font-medium leading-6 text-gray-900"
                     >
                       Image Upload
                     </label>
-                    <input
-                      type="file"
-                      className="file-input file-input-primary mt-4 file-input-bordered file-input-sm w-full max-w-xs"
-                    />
+                    <div className="flex items-center mt-4">
+                      <input
+                        type="file"
+                        id="fileUpload"
+                        accept="image/jpeg, image/png"
+                        className="file-input file-input-primary file-input-bordered file-input-sm w-full max-w-xs"
+                        onChange={uploadImage}
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="modal-action">
-                  <button
-                    type="submit"
-                    className="btn btn-primary mr-2"
-                    onClick={saveFood}
-                  >
-                    Submit
-                  </button>
-                  <button
-                    type="button"
-                    className="btn"
-                    onClick={() => document.getElementById("AddForm").close()}
-                  >
-                    Close
-                  </button>
+                <div>
+                  <div className="modal-action">
+                    <button type="submit" className="btn btn-primary mr-2">
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => document.getElementById("AddForm").close()}
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -218,12 +253,10 @@ export default function Head() {
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
-            {isFoodSaved ? "Food saved successfully" : "Success!"}
+            {isFoodSaved ? "Success" : "Error!"}
           </h3>
           <p className="py-4">
-            {isFoodSaved
-              ? "Please check your email."
-              : "Food saved successfully"}
+            {isFoodSaved ? "Food saved successfully." : "Something went wrong"}
           </p>
           <div className="modal-action">
             <form method="dialog">

@@ -60,7 +60,7 @@ export default function Acordeon({ addItemToCheckItems, addOrderWithNotes }) {
     <option value="3">Desserts</option>
     </select>
     </div>
-      <div role="tablist"  className="tabs tabs-bordered  w-full text-wrap">
+      <div role="tablist"  className="tabs tabs-bordered w-full text-wrap">
         <input
           type="radio"
           name="my_tabs_2"
