@@ -107,8 +107,8 @@ export default function Orders() {
   };
 
   return (
-    <div className="grid h-20 flex-grow bg-base-300 place-items-center">
-      Ordersjsx
+    <div className="grid h-20 flex-grow bg-base-300 place-items-center text-2xl">
+      ORDERS
       <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
         <thead className="">
           <tr>

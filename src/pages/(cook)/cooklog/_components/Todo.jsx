@@ -29,6 +29,18 @@ export default function Todo() {
     return () => socket.disconnect();
   }, []);
 
+  const filterFoodsByCourse = (orders, course) => {
+    return orders.flatMap((order) =>
+      order.plates
+        .filter((plate) => plate.course === course)
+        .map((plate) => ({
+          ...plate,
+          orderId: order.order.id,
+          orderTime: order.order.localTime,
+        }))
+    );
+  };
+
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/order/viewAll/cook_accept", {
       method: "POST",
@@ -52,10 +64,11 @@ export default function Todo() {
       });
   }, [token]);
 
-  return (
-    <div className="grid h-full flex-grow bg-base-300 place-items-center">
-      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-        <thead className="">
+  const renderTable = (course, courseName) => (
+    <div key={course}>
+      <h2>{courseName}</h2>
+      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm ">
+        <thead>
           <tr>
             <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
               Order Id
@@ -71,33 +84,37 @@ export default function Todo() {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-center">
-          {orders.map((order) => (
-            <React.Fragment key={order.order.id}>
-              {order.plates.map((plate) => (
-                <tr key={plate.id}>
-                  <td className="whitespace-nowrap px-4 py-2 text-black">
-                    {order.order.id}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                    {plate.food}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2">
-                  
-                    <Timer
-                      orderId={order.order.id}
-                      orders={orders}
-                      setOrders={setOrders}
-                      time={plate.preparationTime}
-                      orderTime={order.order.localTime}
-                    />
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-2"></td>
-                </tr>
-              ))}
-            </React.Fragment>
+          {filterFoodsByCourse(orders, course).map((plate) => (
+            <tr key={plate.id}>
+              <td className="whitespace-nowrap px-4 py-2 text-black">
+                {plate.orderId}
+              </td>
+              <td className="whitespace-nowrap px-4 py-2 text-gray-700 ">
+                {plate.food}
+              </td>
+              <td className="whitespace-nowrap px-4 py-2">
+                <Timer
+                  orderId={plate.orderId}
+                  orders={orders}
+                  setOrders={setOrders}
+                  time={plate.preparationTime}
+                  orderTime={plate.orderTime}
+                  isMainCourse={course === "MAIN"}
+                />
+              </td>
+              <td className="whitespace-nowrap px-4 py-2"></td>
+            </tr>
           ))}
         </tbody>
       </table>
+    </div>
+  );
+
+  return (
+    <div className="grid h-full flex-grow bg-base-300 text-center text-2xl">
+      {renderTable("APPETIZER", "STARTER")}
+      {renderTable("MAIN", "MAIN COURSE")}
+      {renderTable("DESSERT", "DESSERT")}
     </div>
   );
 }

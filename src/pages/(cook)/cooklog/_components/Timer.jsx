@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 
-const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
+const Timer = ({
+  time,
+  orderId,
+  orders,
+  setOrders,
+  orderTime,
+  isMainCourse,
+}) => {
   if (!orderTime) {
     console.error("orderTime prop is required but was not provided.");
     return null;
@@ -21,7 +28,7 @@ const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
   const elapsedTime = currentTime - orderDateTime;
   const [timeLeft, setTimeLeft] = useState(initialTime - elapsedTime);
   const [isAccepted, setIsAccepted] = useState(false);
-  const [started, setStarted] = useState(false); // Yeni state: zamanlayıcı başladı mı?
+  const [started, setStarted] = useState(false);
 
   const deleteOperation = useCallback(
     (orderId) => {
@@ -94,28 +101,34 @@ const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
     className = "progress-error";
   }
 
-  const getLongestTimeForOrderId = (orderId) => {
-    const orderPlates = orders.find(
-      (order) => order.order.id === orderId
-    ).plates;
+  const getLongestMainCourseTimeForOrderId = (orderId) => {
+    const order = orders.find((order) => order.order.id === orderId);
+    const mainCoursePlates = order.plates.filter(
+      (plate) => plate.course === "MAIN"
+    );
     const longestTime = Math.max(
-      ...orderPlates.map((plate) => plate.preparationTime)
+      ...mainCoursePlates.map((plate) => plate.preparationTime)
     );
     return longestTime;
   };
 
   useEffect(() => {
-    const longestTime = getLongestTimeForOrderId(orderId) * 60 * 1000;
-    if (time === longestTime / (60 * 1000)) {
-      setStarted(true);
-    } else {
-      const timer = setTimeout(() => {
+    if (isMainCourse) {
+      const longestTime =
+        getLongestMainCourseTimeForOrderId(orderId) * 60 * 1000;
+      if (time === longestTime / (60 * 1000)) {
         setStarted(true);
-      }, longestTime - initialTime);
+      } else {
+        const timer = setTimeout(() => {
+          setStarted(true);
+        }, longestTime - initialTime);
 
-      return () => clearTimeout(timer);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      setStarted(true); // Non-main courses start immediately
     }
-  }, [time, orderId, initialTime, orders]);
+  }, [time, orderId, initialTime, orders, isMainCourse]);
 
   return (
     <div className="w-full flex items-center">
@@ -135,6 +148,14 @@ const Timer = ({ time, orderId, orders, setOrders, orderTime }) => {
       </button>
     </div>
   );
+};
+
+Timer.propTypes = {
+  time: PropTypes.number.isRequired,
+  orderId: PropTypes.string.isRequired,
+  orders: PropTypes.array.isRequired,
+  setOrders: PropTypes.func.isRequired,
+  orderTime: PropTypes.string.isRequired,
 };
 
 export default Timer;

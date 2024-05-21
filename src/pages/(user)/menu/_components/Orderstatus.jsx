@@ -5,7 +5,8 @@ export default function OrderStatus({ status }) {
   let icon = "";
   let text = "";
   let cancelBtrue = null;
-  let cancelB = <button className="btn btn-sm" onClick={()=>document.getElementById('cancelModal').showModal()}>Cancel</button>; 
+  let cancelB = <button className="btn btn-sm" onClick={() => document.getElementById('cancelModal').showModal()}>Cancel</button>; 
+  console.log(status)
   switch (status) {
     case 0:
       className += " alert-primary";
