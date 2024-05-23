@@ -6,6 +6,10 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [isAccepted, setIsAccepted] = useState(false);
 
+  const poetsenOne = {
+     fontFamily: "Poetsen One, sans-serif",
+  };
+
   const closeModal = () => {
     setIsAccepted(false);
   };
@@ -107,7 +111,10 @@ export default function Orders() {
   };
 
   return (
-    <div className="grid h-20 flex-grow bg-base-300 place-items-center text-2xl">
+    <div
+      className="grid h-20 flex-grow bg-base-300 place-items-center text-2xl"
+      style={poetsenOne}
+    >
       ORDERS
       <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
         <thead className="">

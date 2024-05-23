@@ -6,6 +6,10 @@ export default function Todo() {
   const token = localStorage.getItem("token");
   const [orders, setOrders] = useState([]);
 
+  const poetsenOne = {
+    fontFamily: "Poetsen One, sans-serif",
+  };
+
   useEffect(() => {
     const socket = io("http://localhost:8877");
 
@@ -99,6 +103,7 @@ export default function Todo() {
                   setOrders={setOrders}
                   time={plate.preparationTime}
                   orderTime={plate.orderTime}
+                  plateId={plate.id}
                   isMainCourse={course === "MAIN"}
                 />
               </td>
@@ -111,7 +116,10 @@ export default function Todo() {
   );
 
   return (
-    <div className="grid h-full flex-grow bg-base-300 text-center text-2xl">
+    <div
+      className="grid h-full flex-grow bg-base-300 text-center text-2xl"
+      style={poetsenOne}
+    >
       {renderTable("APPETIZER", "STARTER")}
       {renderTable("MAIN", "MAIN COURSE")}
       {renderTable("DESSERT", "DESSERT")}

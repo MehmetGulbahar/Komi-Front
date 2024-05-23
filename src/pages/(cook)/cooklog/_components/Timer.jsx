@@ -7,6 +7,7 @@ const Timer = ({
   orders,
   setOrders,
   orderTime,
+  plateId,
   isMainCourse,
 }) => {
   if (!orderTime) {
@@ -14,8 +15,8 @@ const Timer = ({
     return null;
   }
 
-  const orderTimeOnly = orderTime.slice(0, 5); // 'HH:MM' formatında
-  const initialTime = time * 60 * 1000; // Dakikaları milisaniyeye çevir
+  const orderTimeOnly = orderTime.slice(0, 5); // 'HH:MM' format
+  const initialTime = time * 60 * 1000; // Convert minutes to milliseconds
 
   const currentDate = new Date();
   const currentTime = currentDate.getTime();
@@ -31,17 +32,25 @@ const Timer = ({
   const [started, setStarted] = useState(false);
 
   const deleteOperation = useCallback(
-    (orderId) => {
-      const updatedOrders = orders.filter(
-        (order) => order.order.id !== orderId
-      );
+    (orderId, plateId) => {
+      const updatedOrders = orders
+        .map((order) => {
+          if (order.order.id === orderId) {
+            const updatedPlates = order.plates.filter(
+              (plate) => plate.id !== plateId
+            );
+            return { ...order, plates: updatedPlates };
+          }
+          return order;
+        })
+        .filter((order) => order.plates.length > 0);
       setOrders(updatedOrders);
     },
     [orders, setOrders]
   );
 
   const handleAccept = useCallback(
-    (orderId) => {
+    (orderId, plateId) => {
       fetch(`http://localhost:8080/api/v1/order/ready?id=${orderId}`, {
         method: "POST",
         credentials: "include",
@@ -54,7 +63,7 @@ const Timer = ({
             throw new Error("Network response was not ok");
           }
           setIsAccepted(true);
-          deleteOperation(orderId);
+          deleteOperation(orderId, plateId);
         })
         .catch((error) => {
           console.error("Error accepting order:", error);
@@ -65,9 +74,9 @@ const Timer = ({
 
   useEffect(() => {
     if (timeLeft <= 0 && !isAccepted) {
-      handleAccept(orderId);
+      handleAccept(orderId, plateId);
     }
-  }, [timeLeft, isAccepted, handleAccept, orderId]);
+  }, [timeLeft, isAccepted, handleAccept, orderId, plateId]);
 
   useEffect(() => {
     if (started && timeLeft > 0) {
@@ -126,7 +135,7 @@ const Timer = ({
         return () => clearTimeout(timer);
       }
     } else {
-      setStarted(true); // Non-main courses start immediately
+      setStarted(true);
     }
   }, [time, orderId, initialTime, orders, isMainCourse]);
 
@@ -140,7 +149,7 @@ const Timer = ({
       ></progress>
       <button
         onClick={() => {
-          handleAccept(orderId);
+          handleAccept(orderId, plateId);
         }}
         className="ml-4 mr-1 inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700"
       >
@@ -156,6 +165,7 @@ Timer.propTypes = {
   orders: PropTypes.array.isRequired,
   setOrders: PropTypes.func.isRequired,
   orderTime: PropTypes.string.isRequired,
+  plateId: PropTypes.string.isRequired,
 };
 
 export default Timer;
