@@ -7,7 +7,7 @@ export default function Orders() {
   const [isAccepted, setIsAccepted] = useState(false);
 
   const poetsenOne = {
-     fontFamily: "Poetsen One, sans-serif",
+    fontFamily: "Poetsen One, sans-serif",
   };
 
   const closeModal = () => {
@@ -28,7 +28,9 @@ export default function Orders() {
           prevOrders.map((order) => [order.order.id, order])
         );
         updatedOrders.forEach((updatedOrder) => {
-          updatedOrdersMap.set(updatedOrder.order.id, updatedOrder);
+          if (updatedOrder && updatedOrder.order && updatedOrder.order.id) {
+            updatedOrdersMap.set(updatedOrder.order.id, updatedOrder);
+          }
         });
         return Array.from(updatedOrdersMap.values());
       });
@@ -52,12 +54,16 @@ export default function Orders() {
         return response.json();
       })
       .then((data) => {
-        setOrders(data);
+        if (Array.isArray(data)) {
+          setOrders(data);
+        } else {
+          console.error("Fetched data is not an array", data);
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [token]);
 
   const handleAccept = (orderId) => {
     fetch(
@@ -99,6 +105,8 @@ export default function Orders() {
           throw new Error("Network response was not ok");
         }
         closeModal();
+        deleteOperation(orderId);
+
       })
       .catch((error) => {
         console.error("Error rejecting order:", error);
@@ -133,45 +141,52 @@ export default function Orders() {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-center">
-          {orders.map((order) => (
-            <tr key={order.order.id}>
-              <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                {order.order.id}
-              </td>
-              <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                {order.plates.map((plate) => plate.food).join(", ")}
-              </td>
-              <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                {order.order.totalPrice}
-              </td>
-              <td className="whitespace-nowrap px-4 py-2">
-                <a
-                  onClick={() => handleAccept(order.order.id)}
-                  href="#"
-                  className="mr-1 inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700"
-                >
-                  Accept
-                </a>
-                <a
-                  onClick={() => handleReject(order.order.id)}
-                  href="#"
-                  className="inline-block rounded bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
-                >
-                  Decline
-                </a>
-              </td>
-              <td className="whitespace-nowrap px-4 py-2">
-                <div
-                  className="tooltip tooltip-right"
-                  data-tip={order.plates.map((plate) => plate.note).join(", ")}
-                >
-                  <a className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                    View
-                  </a>
-                </div>
-              </td>
-            </tr>
-          ))}
+          {orders.map(
+            (order) =>
+              order &&
+              order.order &&
+              order.order.id && (
+                <tr key={order.order.id}>
+                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                    {order.order.id}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                    {order.plates.map((plate) => plate.food).join(", ")}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                    {order.order.totalPrice}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2">
+                    <a
+                      onClick={() => handleAccept(order.order.id)}
+                      href="#"
+                      className="mr-1 inline-block rounded bg-green-600 px-4 py-2 text-xs font-medium text-white hover:bg-green-700"
+                    >
+                      Accept
+                    </a>
+                    <a
+                      onClick={() => handleReject(order.order.id)}
+                      href="#"
+                      className="inline-block rounded bg-red-600 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
+                    >
+                      Decline
+                    </a>
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-2">
+                    <div
+                      className="tooltip tooltip-right"
+                      data-tip={order.plates
+                        .map((plate) => plate.note)
+                        .join(", ")}
+                    >
+                      <a className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                        View
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              )
+          )}
         </tbody>
       </table>
     </div>
